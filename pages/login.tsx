@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
-import NextLink from "../components/ui/NextLink";
+import { NextLink } from "../components/ui";
+import Image from "next/future/image";
 
 const LoginPage: NextPage = () => {
     return (
@@ -13,7 +14,13 @@ const LoginPage: NextPage = () => {
 
             <section className="w-full max-w-sm sm:max-w-md mx-auto">
                 <div>
-                    <img className="mx-auto h-28 w-auto" src="/assets/Logo.png" alt="Your Company" />
+                    <Image
+                        height={112}
+                        width={112}
+                        className="mx-auto w-auto"
+                        src="/assets/Logo.png"
+                        alt="Your Company"
+                    />
                     <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
                         Sign in to{" "}
                         <span className="bg-gradient-to-br from-pink-600 to-indigo-500 bg-clip-text text-transparent">
@@ -94,7 +101,7 @@ const LoginPage: NextPage = () => {
                     </form>
 
                     <div className="text-left xs:text-center mt-4 text-sm text-gray-900">
-                        Don't have an account?{" "}
+                        Don&apos;t have an account?{" "}
                         <NextLink href="/register" className="text-indigo-600 font-semibold">
                             Create One
                         </NextLink>

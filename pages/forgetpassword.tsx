@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import Head from "next/head";
+import Image from "next/future/image";
 
 const ForgetPassword: NextPage = () => {
     return (
@@ -11,10 +12,16 @@ const ForgetPassword: NextPage = () => {
 
             <section className="w-10/12 max-w-md sm:max-w-lg mx-auto">
                 <div>
-                    <img className="mx-auto h-28 w-auto" src="/assets/Logo.png" alt="Your Company" />
+                    <Image
+                        height={112}
+                        width={112}
+                        className="mx-auto w-auto"
+                        src="/assets/Logo.png"
+                        alt="Your Company"
+                    />
                     <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">Reset your password</h2>
                     <p className="mt-1 text-gray-400 text-xs text-center">
-                        Enter your email and we'll send you a link to reset your password.
+                        Enter your email and we&apos;ll send you a link to reset your password.
                     </p>
                 </div>
 

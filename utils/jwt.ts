@@ -12,13 +12,13 @@ const isValidToken = (accessToken: string) => {
 };
 
 const setSession = (accessToken?: string) => {
-    if (accessToken) {
-        localStorage.setItem("accessToken", accessToken);
+    if (accessToken && isValidToken(accessToken)) {
+        localStorage.setItem("_authToken", accessToken);
         axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     } else {
-        localStorage.removeItem("accessToken");
+        localStorage.removeItem("_authToken");
         delete axios.defaults.headers.common.Authorization;
     }
 };
 
-export { isValidToken, setSession };
+export default setSession;

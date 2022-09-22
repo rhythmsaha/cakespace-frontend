@@ -9,7 +9,7 @@ const Home: NextPageWithLayout = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div></div>
+            <div>Cakespace</div>
         </div>
     );
 };

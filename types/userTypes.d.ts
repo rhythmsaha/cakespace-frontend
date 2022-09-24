@@ -1,15 +1,21 @@
 export interface User {
-    firstName: string;
-    lastname: string;
-    email: string;
-    phone: string;
-    authToken: string;
+  firstName: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  authToken: string;
 }
 
 export interface RegistrationFields {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface LoginFields {
+  email: string;
+  password: string;
+  remember: boolean;
 }

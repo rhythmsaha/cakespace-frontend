@@ -21,7 +21,6 @@ const ResgisterPage: NextPage = () => {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<RegistrationFields>();
 
   const submitHandler = async ({ firstName, lastName, email, password, confirmPassword }: RegistrationFields) => {

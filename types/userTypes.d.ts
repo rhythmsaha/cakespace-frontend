@@ -5,3 +5,11 @@ export interface User {
     phone: string;
     authToken: string;
 }
+
+export interface RegistrationFields {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+}

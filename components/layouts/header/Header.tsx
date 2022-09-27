@@ -10,8 +10,8 @@ const Header = () => {
   const { width } = useWindowSize();
 
   return (
-    <header className="border-b">
-      <div className="w-11/12 mx-auto h-20 flex items-center justify-between gap-6">
+    <header className="border-b ">
+      <div className="w-11/12 mx-auto h-20 flex items-center justify-between gap-6 relative">
         {width < 1200 && (
           <button className="p-2">
             <Bars2Icon className="h-6" />

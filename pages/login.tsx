@@ -11,6 +11,9 @@ import { toast } from "react-hot-toast";
 import { axios } from "../utils";
 import { useAppDispatch } from "../hooks";
 import { login } from "../store/slices/auth/slice";
+import setSession from "../utils/jwt";
+import { NextPageWithLayout } from "./_app";
+import GuestGuard from "../components/guards/GuestGuard";
 
 interface FieldErrorPath extends FieldError {
   path: "email" | "password";
@@ -22,7 +25,7 @@ interface LoginResponse {
   user: User;
 }
 
-const LoginPage: NextPage = () => {
+const LoginPage: NextPageWithLayout = () => {
   const router = useRouter();
   const dispath = useAppDispatch();
 
@@ -45,9 +48,10 @@ const LoginPage: NextPage = () => {
       });
 
       const { message, authToken, user } = (await response.data) as LoginResponse;
-      dispath(login({ ...user, authToken }));
-
+      dispath(login({ authToken, user }));
       toast.success(message);
+      setSession(authToken);
+      router.push("/");
     } catch (error: any) {
       if (error?.fields && error.fields.length > 0) {
         error.fields.forEach((field: FieldErrorPath) => {
@@ -164,5 +168,9 @@ const LoginPage: NextPage = () => {
       </section>
     </main>
   );
+};
+
+LoginPage.getLayout = (page) => {
+  return <GuestGuard>{page}</GuestGuard>;
 };
 export default LoginPage;

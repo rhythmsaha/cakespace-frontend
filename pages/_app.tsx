@@ -5,22 +5,27 @@ import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { store } from "../store";
 import AuthProvider from "../components/layouts/AuthProvider";
+import { Toaster } from "react-hot-toast";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-    getLayout?: (page: ReactElement) => ReactNode;
+  getLayout?: (page: ReactElement) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
-    Component: NextPageWithLayout;
+  Component: NextPageWithLayout;
 };
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-    // Use the layout defined at the page level, if available
-    const getLayout = Component.getLayout ?? ((page) => page);
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout ?? ((page) => page);
 
-    return (
-        <Provider store={store}>
-            <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>
-        </Provider>
-    );
+  return (
+    <>
+      <Provider store={store}>
+        <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>
+      </Provider>
+
+      <Toaster />
+    </>
+  );
 }

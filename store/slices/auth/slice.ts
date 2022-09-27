@@ -3,37 +3,39 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../../../types/userTypes";
 
 export interface AuthState {
-    isInitialized: boolean;
-    isAuthenticated: boolean;
-    user?: User;
+  isInitialized?: boolean;
+  isAuthenticated?: boolean;
+  authToken?: string;
+  user?: User;
 }
 
 const initialState: AuthState = {
-    isInitialized: false,
-    isAuthenticated: false,
-    user: undefined,
+  isInitialized: false,
+  isAuthenticated: false,
 };
 
 const authSlice = createSlice({
-    name: "auth",
-    initialState,
-    reducers: {
-        initialize: (state, action: PayloadAction<AuthState>) => {
-            state.isInitialized = true;
-            state.isAuthenticated = action.payload.isAuthenticated;
-            state.user = action.payload.user;
-        },
-
-        login: (state, action: PayloadAction<User>) => {
-            state.isAuthenticated = true;
-            state.user = action.payload;
-        },
-
-        logout: (state) => {
-            state.isAuthenticated = false;
-            state.user = undefined;
-        },
+  name: "auth",
+  initialState,
+  reducers: {
+    initialize: (state) => {
+      state.isInitialized = true;
+      state.isAuthenticated = false;
+      state.authToken = undefined;
+      state.user = undefined;
     },
+
+    login: (state, action: PayloadAction<AuthState>) => {
+      state.isAuthenticated = true;
+      state.authToken = action.payload.authToken;
+      state.user = action.payload.user;
+    },
+
+    logout: (state) => {
+      state.isAuthenticated = false;
+      state.user = undefined;
+    },
+  },
 });
 
 export default authSlice.reducer;

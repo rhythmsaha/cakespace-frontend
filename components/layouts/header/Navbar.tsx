@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { Fragment, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { NextLink } from "../../ui";
@@ -12,10 +11,10 @@ const Navbar = () => {
   return (
     <nav className="ml-10 flex-1 h-full">
       <Popover.Group className="flex gap-6 text-gray-500 font-medium items-center h-full ">
-        <NextLink href="">Birthday</NextLink>
-        <NextLink href="">Anniversary</NextLink>
-        <NextLink href="">Wedding</NextLink>
-        <NextLink href="">Pastries</NextLink>
+        <NextLink href="/products?category=celebration-cakes&subCategory=birthday-cake">Birthday</NextLink>
+        <NextLink href="/products?category=celebration-cakes&subCategory=anniversary-cake">Anniversary</NextLink>
+        <NextLink href="/products?category=celebration-cakes&subCategory=wedding-cake">Wedding</NextLink>
+        <NextLink href="/products?category=pastries">Pastries</NextLink>
 
         <Popover className="h-full w-full">
           {({ open }) => (
@@ -90,30 +89,6 @@ const Navbar = () => {
                           />
                         </div>
                       </div>
-
-                      <div>
-                        <h4 className="font-semibold">By Flavours</h4>
-                        <div className="flex flex-col text-sm text-gray-700 mt-1 font-normal">
-                          <NextLink href="">Black Forest Cakes</NextLink>
-                          <NextLink href="">Blueberry Cakes</NextLink>
-                          <NextLink href="">ButterScotch Cakes</NextLink>
-                          <NextLink href="">Caramel Cakes</NextLink>
-                          <NextLink href="">Chocolate Cakes</NextLink>
-                          <NextLink href="">Coffee Cakes</NextLink>
-                          <NextLink href="">Exotics Cakes</NextLink>
-                          <NextLink href="">Ferrero Rocher Cakes</NextLink>
-                          <NextLink href="">Fruit Cakes</NextLink>
-                          <NextLink href="">Kitkat Cakes</NextLink>
-                          <NextLink href="">Mango Cakes</NextLink>
-                          <NextLink href="">Pineapple Cakes</NextLink>
-                          <NextLink href="">Rainbow Cakes</NextLink>
-                          <NextLink href="">Red Velvet Cakes</NextLink>
-                          <NextLink href="">Strawberry Cakes</NextLink>
-                          <NextLink href="">Truffle Cakes</NextLink>
-                          <NextLink href="">Vanilla Cakes</NextLink>
-                          <NextLink href="">White Forest Cakes</NextLink>
-                        </div>
-                      </div>
                     </div>
                   </Popover.Panel>
                 </Transition>
@@ -132,6 +107,7 @@ interface ImageProps {
   label: string;
   className: string;
 }
+
 const NavbarImage = ({ src, label, className }: ImageProps) => {
   const [showLabel, setShowLabel] = useState(false);
 

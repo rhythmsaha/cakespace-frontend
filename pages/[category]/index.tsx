@@ -41,7 +41,7 @@ const sortlist: SortObj[] = [
   {
     id: 3,
     label: "Price high to low",
-    sortby: "PRICE_HIGh_TO_LOW",
+    sortby: "PRICE_HIGH_TO_LOW",
   },
 ];
 
@@ -59,7 +59,7 @@ const Category: NextPageWithLayout<Props> = ({ category, categories, flavours, s
   const handleFlavourChange = (_flavours: string[]) => setSelectedFlavours(_flavours);
 
   return (
-    <div className="flex browse-main-height overflow-hidden relative lg:px-10">
+    <div className="flex browse-main-height overflow-hidden relative lg:pl-10">
       <aside className="hidden lg:block border-r w-48">
         <SimpleBar style={{ maxHeight: "100%", scrollBehavior: "smooth" }} className="px-2">
           <h4 className="text-lg text-gray-600 font-semibold py-1 mt-8">Filter</h4>
@@ -77,8 +77,8 @@ const Category: NextPageWithLayout<Props> = ({ category, categories, flavours, s
         </SimpleBar>
       </aside>
 
-      <div className="flex-1 mt-4 overflow-y-auto px-8">
-        <div className="flex justify-between lg:justify-end items-center px-5 pb-3.5 lg:px-10 ">
+      <div className="flex-1 mt-6 overflow-y-auto lg:pl-10 lg:pr-14">
+        <div className="flex justify-between lg:justify-end items-center gap-4 py-4 w-full">
           <MobileFilter
             categories={categories}
             subCategories={subCategories}

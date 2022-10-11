@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Product } from "../../types/product";
+import type { Product as ProductType } from "../../types/product";
 import { axios } from "../../utils";
+import Product from "./Product";
+import ProductSkelaton from "./ProductSkelaton";
 
 interface Props {
   sortby?: string;
@@ -11,9 +13,11 @@ interface Props {
 }
 
 function ProductsList({ category, subCategory, flavours, price, sortby }: Props) {
-  const [productsList, setProductsList] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [productsList, setProductsList] = useState<ProductType[]>([]);
 
   const fetchProducts = useCallback(async () => {
+    setLoading(true);
     try {
       const response = await axios.get(`/products`, {
         params: { category, subCategories: subCategory, flavours, price, sortby },
@@ -25,6 +29,8 @@ function ProductsList({ category, subCategory, flavours, price, sortby }: Props)
     } catch (error) {
       console.log(error);
     }
+
+    setLoading(false);
   }, [category, subCategory, flavours, price, sortby]);
 
   useEffect(() => {
@@ -32,14 +38,27 @@ function ProductsList({ category, subCategory, flavours, price, sortby }: Props)
   }, [fetchProducts]);
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      {productsList.map((product) => (
-        <div key={product._id}>
-          <img src={product.images[0]} alt="" className="w-full aspect-square object-cover" />
-          <p>{product.name}</p>
-          <p>{product.price}</p>
-        </div>
-      ))}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-4 mt-6">
+      {loading && (
+        <>
+          <ProductSkelaton />
+          <ProductSkelaton />
+          <ProductSkelaton />
+          <ProductSkelaton />
+        </>
+      )}
+
+      {!loading &&
+        productsList.map((product) => (
+          <Product
+            key={product._id}
+            name={product.name}
+            image={product.images[0]}
+            price={product.price}
+            stock={product.stocks}
+            description={product.description}
+          />
+        ))}
     </div>
   );
 }

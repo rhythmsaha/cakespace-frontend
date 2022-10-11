@@ -1,39 +1,28 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-const sortings = [
-  {
-    id: 1,
-    label: "Popularity",
-    sortby: "POPULARITY",
-  },
-
-  {
-    id: 2,
-    label: "Price low to high",
-    sortby: "PRICE_LOW_TO_HIGH",
-  },
-
-  {
-    id: 3,
-    label: "Price high to low",
-    sortby: "PRICE_HIGh_TO_LOW",
-  },
-];
+interface SortObj {
+  id: number;
+  label: string;
+  sortby: string;
+}
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const SortBy = () => {
-  const [selected, setSelected] = useState(sortings[0]);
-
+interface Props {
+  onSelect: (value: SortObj) => void;
+  selected: SortObj;
+  sortlist: SortObj[];
+}
+const SortBy = ({ onSelect, selected, sortlist }: Props) => {
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={selected} onChange={onSelect}>
       {({ open }) => (
         <div className="relative ">
-          <Listbox.Button className="relative w-40 cursor-default rounded-md border shadow bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-sm ">
+          <Listbox.Button className="relative w-40 cursor-default rounded-md border shadow bg-white py-2 px-1 text-left focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-sm ">
             <span className="flex items-center">
               <span className="ml-3 block truncate">{selected.label}</span>
             </span>
@@ -50,8 +39,8 @@ const SortBy = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute w-40 z-50 mt-1 max-h-56  overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-nonetext-sm ">
-              {sortings.map((item) => (
+            <Listbox.Options className="absolute z-50 text-xs mt-1 max-h-56 w-40 overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-nonetext-sm ">
+              {sortlist.map((item) => (
                 <Listbox.Option
                   key={item.id}
                   className={({ active }) =>
@@ -69,17 +58,6 @@ const SortBy = () => {
                           {item.label}
                         </span>
                       </div>
-
-                      {selected ? (
-                        <span
-                          className={classNames(
-                            active ? "text-white" : "text-indigo-600",
-                            "absolute inset-y-0 right-0 flex items-center pr-4"
-                          )}
-                        >
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      ) : null}
                     </>
                   )}
                 </Listbox.Option>

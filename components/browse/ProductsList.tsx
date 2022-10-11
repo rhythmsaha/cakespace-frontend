@@ -32,7 +32,7 @@ function ProductsList({ category, subCategory, flavours, price, sortby }: Props)
   }, [fetchProducts]);
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       {productsList.map((product) => (
         <div key={product._id}>
           <img src={product.images[0]} alt="" className="w-full aspect-square object-cover" />

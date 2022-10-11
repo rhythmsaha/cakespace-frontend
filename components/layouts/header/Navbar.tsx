@@ -10,7 +10,7 @@ function classNames(...classes: string[]) {
 
 const Navbar = () => {
   return (
-    <nav className="ml-10 flex-1 h-full">
+    <nav className="ml-10 flex-1 h-full hidden lg2:block">
       <Popover.Group className="flex gap-6 text-gray-500 font-medium items-center h-full ">
         <NextLink href="/celebration-cakes/birthday-cake">Birthday</NextLink>
         <NextLink href="/celebration-cakes/anniversary-cake">Anniversary</NextLink>

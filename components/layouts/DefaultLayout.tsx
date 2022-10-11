@@ -6,9 +6,9 @@ interface Props {
 
 const DefaultLayout = ({ children }: Props) => {
   return (
-    <div className="overflow-y-auto overflow-x-hidden min-h-screen">
+    <div className="relative min-h-screen">
       <Header />
-      <main className="mx-auto w-11/12">{children}</main>
+      <main className="mx-auto w-11/12 lg:w-full overflow-x-hidden overflow-y-auto">{children}</main>
     </div>
   );
 };

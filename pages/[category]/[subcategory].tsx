@@ -5,6 +5,10 @@ import DefaultLayout from "../../components/layouts/DefaultLayout";
 import { Category, Flavour, SubCategory } from "../../types/categoriesTypes";
 import { axios } from "../../utils";
 import { NextPageWithLayout } from "../_app";
+import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
+import SortBy from "../../components/browse/SortBy";
+import MobileFilter from "../../components/browse/MobileFilter";
 
 interface Props {
   key: string;
@@ -26,15 +30,41 @@ const Subcategory: NextPageWithLayout<Props> = ({ category, subcategory, categor
   const handleFlavourChange = (_flavours: string[]) => setSelectedFlavours(_flavours);
 
   return (
-    <div>
-      <FilterBar
-        categories={categories}
-        subCategories={subCategories}
-        flavours={flavours}
-        onPriceChange={handlePriceChange}
-        onFlavourChange={handleFlavourChange}
-        selectedFlavours={selectedFlavours}
-      />
+    <div className="flex browse-main-height overflow-hidden relative lg:px-10">
+      <aside className="hidden lg:block border-r w-48">
+        <SimpleBar style={{ maxHeight: "100%", scrollBehavior: "smooth" }} className="px-2">
+          <h4 className="text-lg text-gray-600 font-semibold py-1 mt-8">Filter</h4>
+
+          <div className="py-4">
+            <FilterBar
+              categories={categories}
+              subCategories={subCategories}
+              flavours={flavours}
+              onPriceChange={handlePriceChange}
+              onFlavourChange={handleFlavourChange}
+              selectedFlavours={selectedFlavours}
+            />
+          </div>
+        </SimpleBar>
+      </aside>
+
+      <div className="flex-1 mt-6 overflow-y-auto px-8">
+        <div className="flex justify-between lg:justify-end items-center px-5 py-4 lg:px-10 ">
+          <MobileFilter
+            categories={categories}
+            subCategories={subCategories}
+            flavours={flavours}
+            onPriceChange={handlePriceChange}
+            onFlavourChange={handleFlavourChange}
+            selectedFlavours={selectedFlavours}
+          />
+
+          <SortBy />
+        </div>
+        <hr className="lg:mx-10" />
+
+        <div></div>
+      </div>
     </div>
   );
 };

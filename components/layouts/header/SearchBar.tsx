@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 const SearchBar = () => {
   return (
-    <div className="relative rounded-md shadow-sm flex-grow max-w-md">
+    <div className="relative rounded-md shadow-sm flex-grow max-w-md hidden lg2:block">
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center px-4">
         <MagnifyingGlassIcon className="h-4 text-gray-500" />
       </div>

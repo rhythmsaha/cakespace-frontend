@@ -79,7 +79,7 @@ const Subcategory: NextPageWithLayout<Props> = ({ category, subcategory, categor
         </SimpleBar>
       </aside>
 
-      <div className="flex-1 mt-6 overflow-y-auto lg:pl-10 lg:pr-14">
+      <div className="flex-1 my-10 overflow-y-auto lg:pl-10 lg:pr-14">
         <div className="flex justify-between lg:justify-end items-center gap-4 py-4 w-full">
           <MobileFilter
             categories={categories}

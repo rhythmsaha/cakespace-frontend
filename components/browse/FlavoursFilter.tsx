@@ -32,21 +32,25 @@ const FlavoursFilter = ({ flavours, onSelect, selectedFlavours }: Props) => {
     <div>
       <h4 className="font-semibold text-gray-700">Flavours</h4>
       <div className="mt-1 space-y-1">
-        {_flavours.map((flavour) => (
-          <div key={flavour._id} className="flex items-center">
-            <input
-              value={flavour._id}
-              type="checkbox"
-              defaultChecked={checkIfSelected(flavour._id)}
-              id={flavour._id}
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-              onChange={(e) => handleChange(e.target.value, e.target.checked)}
-            />
-            <label className="ml-2 block text-sm text-gray-900" htmlFor={flavour._id}>
-              {flavour.name}
-            </label>
-          </div>
-        ))}
+        {_flavours.map((flavour) => {
+          const id = flavour._id + Math.round(Math.random() * 50);
+
+          return (
+            <div key={flavour._id} className="flex items-center">
+              <input
+                value={flavour._id}
+                type="checkbox"
+                defaultChecked={checkIfSelected(flavour._id)}
+                id={id}
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                onChange={(e) => handleChange(e.target.value, e.target.checked)}
+              />
+              <label className="ml-2 block text-sm text-gray-900" htmlFor={id}>
+                {flavour.name}
+              </label>
+            </div>
+          );
+        })}
         <button className="text-sm cursor-pointer mt-1 text-gray-900" onClick={() => setShowMore((more) => !more)}>
           {showMore ? "Show Less..." : "Show More..."}
         </button>

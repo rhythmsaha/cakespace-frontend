@@ -37,6 +37,14 @@ function ProductsList({ category, subCategory, flavours, price, sortby }: Props)
     fetchProducts();
   }, [fetchProducts]);
 
+  if (!loading && productsList.length === 0) {
+    return (
+      <div className="w-full flex items-center justify-center py-20">
+        <p className="text-gray-600">No Products Found!</p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-4 mt-6">
       {loading && (
@@ -53,10 +61,11 @@ function ProductsList({ category, subCategory, flavours, price, sortby }: Props)
           <Product
             key={product._id}
             name={product.name}
-            image={product.images[0]}
+            images={product.images}
             price={product.price}
             stock={product.stocks}
             description={product.description}
+            slug={product.slug}
           />
         ))}
     </div>

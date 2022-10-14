@@ -6,14 +6,14 @@ export interface Flavour {
 
 export interface Category {
   _id: string;
-  name: String;
+  name: string;
   slug: string;
-  image: string;
+  icon: string;
   subCategories: SubCategory[];
 }
 
 export interface SubCategory {
   _id: string;
-  name: String;
+  name: string;
   slug: string;
 }

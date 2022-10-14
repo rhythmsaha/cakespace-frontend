@@ -3,7 +3,7 @@ import DefaultLayout from "../../components/layouts/DefaultLayout";
 import { Product } from "../../types/product";
 import { axios } from "../../utils";
 import { NextPageWithLayout } from "../_app";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 
@@ -18,6 +18,13 @@ function classNames(...classes: any[]) {
 }
 
 const ProductPage: NextPageWithLayout<Props> = ({ product }) => {
+  useEffect(() => {
+    axios
+      .post(`/products/views/${product.slug}`)
+      .then((res) => res.data)
+      .catch((e) => e);
+  }, [product]);
+
   return (
     <div className="bg-white">
       <div className="pt-6">
@@ -118,11 +125,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const response = await axios.get(`/products/${context.params?.slug}`);
   const product = response.data;
 
-  console.log(context.params?.slug);
-
   return {
     props: {
-      key: product._id,
+      key: product.slug,
       product: product,
     },
     revalidate: 60 * 60 * 24,

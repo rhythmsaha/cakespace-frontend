@@ -13,7 +13,7 @@ interface Props {
 
 const Product = ({ name, images, price, stock, slug }: Props) => {
   return (
-    <NextLink href={`/product/${slug}`}>
+    <NextLink href={`/product/${slug}`} className="w-full">
       <div className="cursor-pointer border border-gray-100 hover:shadow-md transition-shadow duration-200 rounded-xl p-4">
         <div className="w-full object-cover aspect-square rounded-lg overflow-hidden">
           <Image

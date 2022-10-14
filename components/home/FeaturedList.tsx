@@ -13,9 +13,7 @@ const FeaturedList = ({ title, products }: Props) => {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4 mt-5">
         {products.map((product) => (
-          <div key={product._id} className="max-w-sm min-w-[200px]">
-            <Product {...product} />
-          </div>
+          <Product {...product} key={product._id} />
         ))}
       </div>
     </div>

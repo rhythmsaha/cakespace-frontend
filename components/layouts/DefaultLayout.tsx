@@ -1,3 +1,4 @@
+import Footer from "./footer";
 import Header from "./header";
 
 interface Props {
@@ -9,6 +10,7 @@ const DefaultLayout = ({ children }: Props) => {
     <div className="relative min-h-screen">
       <Header />
       <main className="mx-auto w-11/12 lg:w-full overflow-x-hidden overflow-y-auto">{children}</main>
+      <Footer />
     </div>
   );
 };

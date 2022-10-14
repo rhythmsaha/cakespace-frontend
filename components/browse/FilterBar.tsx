@@ -7,8 +7,8 @@ import SubCategoriesFilter from "./SubCategoriesFilter";
 
 interface Props {
   flavours: Flavour[];
-  categories: Category[];
-  subCategories: SubCategory[];
+  categories?: Category[];
+  subCategories?: SubCategory[];
   selectedFlavours: string[];
   onPriceChange: (value: number) => void;
   onFlavourChange: (flavours: string[]) => void;
@@ -16,8 +16,8 @@ interface Props {
 
 const FilterBar = ({
   flavours,
-  categories,
-  subCategories,
+  categories = [],
+  subCategories = [],
   onPriceChange,
   onFlavourChange,
   selectedFlavours,
@@ -26,6 +26,7 @@ const FilterBar = ({
     <div className="space-y-4">
       {categories.length > 0 && <CategoriesFilter categories={categories} />}
       {subCategories.length > 0 && <SubCategoriesFilter subCategories={subCategories} />}
+
       <FlavoursFilter flavours={flavours} onSelect={onFlavourChange} selectedFlavours={selectedFlavours} />
       <PriceFilter onSelect={onPriceChange} />
     </div>

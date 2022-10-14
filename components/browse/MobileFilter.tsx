@@ -7,8 +7,8 @@ import FilterBar from "./FilterBar";
 
 interface Props {
   flavours: Flavour[];
-  categories: Category[];
-  subCategories: SubCategory[];
+  categories?: Category[];
+  subCategories?: SubCategory[];
   selectedFlavours: string[];
   onPriceChange: (value: number) => void;
   onFlavourChange: (flavours: string[]) => void;

@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 interface Props {
   onSelect: (value: number) => void;
 }
@@ -15,27 +17,37 @@ const PriceFilter = ({ onSelect }: Props) => {
     <div className="">
       <h4 className="font-semibold text-gray-700">Price</h4>
       <div className="mt-1 space-y-1">
-        {priceList.map((list, index) => {
-          const id = list.text + Math.round(Math.random() * 50);
-
-          return (
-            <div className="flex items-center gap-1" key={index}>
-              <input
-                type="radio"
-                className="text-indigo-600 focus:ring-indigo-600"
-                name="price"
-                id={id}
-                value={list.value}
-                onChange={(e) => onSelect(+e.target.value)}
-              />
-              <label className="ml-1 block text-sm text-gray-900" htmlFor={id}>
-                {list.text}
-              </label>
-            </div>
-          );
-        })}
+        {priceList.map((list, index) => (
+          <PriceOption key={index} onSelect={onSelect} priceFilter={list} />
+        ))}
       </div>
     </div>
   );
 };
+
+interface PriceProps {
+  priceFilter: { text: string; value: number };
+  onSelect: (value: number) => void;
+}
+
+const PriceOption = ({ priceFilter, onSelect }: PriceProps) => {
+  const id = useId();
+
+  return (
+    <div className="flex items-center gap-1">
+      <input
+        type="radio"
+        className="text-indigo-600 focus:ring-indigo-600"
+        name="price"
+        id={id}
+        value={priceFilter.value}
+        onChange={(e) => onSelect(+e.target.value)}
+      />
+      <label className="ml-1 block text-sm text-gray-900" htmlFor={id}>
+        {priceFilter.text}
+      </label>
+    </div>
+  );
+};
+
 export default PriceFilter;

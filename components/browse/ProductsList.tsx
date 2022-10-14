@@ -10,9 +10,10 @@ interface Props {
   subCategory?: string;
   flavours?: string[];
   price?: number;
+  searchQuery?: string | string[];
 }
 
-function ProductsList({ category, subCategory, flavours, price, sortby }: Props) {
+function ProductsList({ category, subCategory, flavours, price, sortby, searchQuery }: Props) {
   const [loading, setLoading] = useState(true);
   const [productsList, setProductsList] = useState<ProductType[]>([]);
 
@@ -20,10 +21,9 @@ function ProductsList({ category, subCategory, flavours, price, sortby }: Props)
     setLoading(true);
     try {
       const response = await axios.get(`/products`, {
-        params: { category, subCategories: subCategory, flavours, price, sortby },
+        params: { category, subCategories: subCategory, flavours, price, sortby, searchQuery },
       });
       const products = await response.data.products;
-      console.log(products);
 
       setProductsList(products);
     } catch (error) {
@@ -31,7 +31,7 @@ function ProductsList({ category, subCategory, flavours, price, sortby }: Props)
     }
 
     setLoading(false);
-  }, [category, subCategory, flavours, price, sortby]);
+  }, [category, subCategory, flavours, price, sortby, searchQuery]);
 
   useEffect(() => {
     fetchProducts();

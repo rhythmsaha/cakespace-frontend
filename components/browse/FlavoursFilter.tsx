@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { Flavour } from "../../types/categoriesTypes";
 
 interface Props {
@@ -6,6 +6,7 @@ interface Props {
   selectedFlavours: string[];
   onSelect: (flavours: string[]) => void;
 }
+
 const FlavoursFilter = ({ flavours, onSelect, selectedFlavours }: Props) => {
   const [showMore, setShowMore] = useState(false);
 
@@ -32,25 +33,14 @@ const FlavoursFilter = ({ flavours, onSelect, selectedFlavours }: Props) => {
     <div>
       <h4 className="font-semibold text-gray-700">Flavours</h4>
       <div className="mt-1 space-y-1">
-        {_flavours.map((flavour) => {
-          const id = flavour._id + Math.round(Math.random() * 50);
-
-          return (
-            <div key={flavour._id} className="flex items-center">
-              <input
-                value={flavour._id}
-                type="checkbox"
-                defaultChecked={checkIfSelected(flavour._id)}
-                id={id}
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                onChange={(e) => handleChange(e.target.value, e.target.checked)}
-              />
-              <label className="ml-2 block text-sm text-gray-900" htmlFor={id}>
-                {flavour.name}
-              </label>
-            </div>
-          );
-        })}
+        {_flavours.map((flavour) => (
+          <FlavourOption
+            key={flavour._id}
+            defaultChecked={checkIfSelected(flavour._id)}
+            flavour={flavour}
+            onChange={handleChange}
+          />
+        ))}
         <button className="text-sm cursor-pointer mt-1 text-gray-900" onClick={() => setShowMore((more) => !more)}>
           {showMore ? "Show Less..." : "Show More..."}
         </button>
@@ -59,3 +49,28 @@ const FlavoursFilter = ({ flavours, onSelect, selectedFlavours }: Props) => {
   );
 };
 export default FlavoursFilter;
+
+interface FlavourOptions {
+  flavour: Flavour;
+  defaultChecked: boolean;
+  onChange: (id: string, checked: Boolean) => void;
+}
+
+const FlavourOption = ({ flavour, defaultChecked, onChange }: FlavourOptions) => {
+  const id = useId();
+  return (
+    <div className="flex items-center">
+      <input
+        value={flavour._id}
+        type="checkbox"
+        defaultChecked={defaultChecked}
+        id={id}
+        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+        onChange={(e) => onChange(e.target.value, e.target.checked)}
+      />
+      <label className="ml-2 block text-sm text-gray-900" htmlFor={id}>
+        {flavour.name}
+      </label>
+    </div>
+  );
+};

@@ -10,12 +10,7 @@ import "simplebar/dist/simplebar.min.css";
 import SortBy from "../../components/browse/SortBy";
 import MobileFilter from "../../components/browse/MobileFilter";
 import ProductsList from "../../components/browse/ProductsList";
-
-interface SortObj {
-  id: number;
-  label: string;
-  sortby: string;
-}
+import { sortlist, SortObj } from "../../utils/config";
 
 interface Props {
   key: string;
@@ -25,26 +20,6 @@ interface Props {
   subCategories: SubCategory[];
   flavours: Flavour[];
 }
-
-const sortlist: SortObj[] = [
-  {
-    id: 1,
-    label: "Popularity",
-    sortby: "POPULARITY",
-  },
-
-  {
-    id: 2,
-    label: "Price low to high",
-    sortby: "PRICE_LOW_TO_HIGH",
-  },
-
-  {
-    id: 3,
-    label: "Price high to low",
-    sortby: "PRICE_HIGh_TO_LOW",
-  },
-];
 
 const Subcategory: NextPageWithLayout<Props> = ({ category, subcategory, categories, flavours, subCategories }) => {
   const [selectedPrice, setSelectedPrice] = useState<number>(0);

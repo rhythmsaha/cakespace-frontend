@@ -5,18 +5,12 @@ import DefaultLayout from "../../components/layouts/DefaultLayout";
 import { Category, Flavour, SubCategory } from "../../types/categoriesTypes";
 import { axios } from "../../utils";
 import { NextPageWithLayout } from "../_app";
-
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 import MobileFilter from "../../components/browse/MobileFilter";
 import SortBy from "../../components/browse/SortBy";
 import ProductsList from "../../components/browse/ProductsList";
-
-interface SortObj {
-  id: number;
-  label: string;
-  sortby: string;
-}
+import { sortlist, SortObj } from "../../utils/config";
 
 interface Props {
   category: string;
@@ -24,26 +18,6 @@ interface Props {
   subCategories: SubCategory[];
   flavours: Flavour[];
 }
-
-const sortlist: SortObj[] = [
-  {
-    id: 1,
-    label: "Popularity",
-    sortby: "POPULARITY",
-  },
-
-  {
-    id: 2,
-    label: "Price low to high",
-    sortby: "PRICE_LOW_TO_HIGH",
-  },
-
-  {
-    id: 3,
-    label: "Price high to low",
-    sortby: "PRICE_HIGH_TO_LOW",
-  },
-];
 
 const Category: NextPageWithLayout<Props> = ({ category, categories, flavours, subCategories }) => {
   const [selectedPrice, setSelectedPrice] = useState<number>(0);

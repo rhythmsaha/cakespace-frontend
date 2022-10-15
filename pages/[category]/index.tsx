@@ -11,6 +11,7 @@ import MobileFilter from "../../components/browse/MobileFilter";
 import SortBy from "../../components/browse/SortBy";
 import ProductsList from "../../components/browse/ProductsList";
 import { sortlist, SortObj } from "../../utils/config";
+import StickyBox from "react-sticky-box";
 
 interface Props {
   category: string;
@@ -33,12 +34,10 @@ const Category: NextPageWithLayout<Props> = ({ category, categories, flavours, s
   const handleFlavourChange = (_flavours: string[]) => setSelectedFlavours(_flavours);
 
   return (
-    <div className="flex browse-main-height overflow-hidden relative lg:pl-10">
-      <aside className="hidden lg:block border-r w-48">
-        <SimpleBar style={{ maxHeight: "100%", scrollBehavior: "smooth" }} className="px-2">
-          <h4 className="text-lg text-gray-600 font-semibold py-1 mt-8">Filter</h4>
-
-          <div className="py-4">
+    <div className="flex gap-6">
+      <div className="border-r hidden lg:block">
+        <StickyBox offsetTop={80} offsetBottom={20}>
+          <div className="browse-main-height">
             <FilterBar
               categories={categories}
               subCategories={subCategories}
@@ -48,25 +47,25 @@ const Category: NextPageWithLayout<Props> = ({ category, categories, flavours, s
               selectedFlavours={selectedFlavours}
             />
           </div>
-        </SimpleBar>
-      </aside>
+        </StickyBox>
+      </div>
 
-      <div className="flex-1 py-10 lg:pl-10 lg:pr-14 overflow-y-auto">
-        <div className="flex justify-between lg:justify-end items-center gap-4 py-4 w-full">
-          <MobileFilter
-            categories={categories}
-            subCategories={subCategories}
-            flavours={flavours}
-            onPriceChange={handlePriceChange}
-            onFlavourChange={handleFlavourChange}
-            selectedFlavours={selectedFlavours}
-          />
+      <div className="flex-1 mb-20 mt-10">
+        <div className="mx-auto w-11/12">
+          <div className="flex justify-between lg:justify-end items-center gap-4 py-4 w-full">
+            <MobileFilter
+              categories={categories}
+              subCategories={subCategories}
+              flavours={flavours}
+              onPriceChange={handlePriceChange}
+              onFlavourChange={handleFlavourChange}
+              selectedFlavours={selectedFlavours}
+            />
 
-          <SortBy selected={sortby} onSelect={setSortby} sortlist={sortlist} />
-        </div>
-        <hr className="lg:mx-10" />
+            <SortBy selected={sortby} onSelect={setSortby} sortlist={sortlist} />
+          </div>
+          <hr className="lg:mx-10" />
 
-        <div>
           <ProductsList
             category={selectedCategory?._id}
             flavours={selectedFlavours}

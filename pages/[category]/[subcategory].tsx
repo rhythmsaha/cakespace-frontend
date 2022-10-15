@@ -5,8 +5,6 @@ import DefaultLayout from "../../components/layouts/DefaultLayout";
 import { Category, Flavour, SubCategory } from "../../types/categoriesTypes";
 import { axios } from "../../utils";
 import { NextPageWithLayout } from "../_app";
-import SimpleBar from "simplebar-react";
-import "simplebar/dist/simplebar.min.css";
 import SortBy from "../../components/browse/SortBy";
 import MobileFilter from "../../components/browse/MobileFilter";
 import ProductsList from "../../components/browse/ProductsList";
@@ -38,7 +36,7 @@ const Subcategory: NextPageWithLayout<Props> = ({ category, subcategory, categor
 
   return (
     <div className="flex gap-6">
-      <div className="border-r hidden lg:block ">
+      <div className="border-r hidden lg:block">
         <StickyBox offsetTop={80} offsetBottom={20}>
           <div className="browse-main-height">
             <FilterBar

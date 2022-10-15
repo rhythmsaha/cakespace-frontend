@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 const Footer = () => {
   return (
-    <footer className="xl:px-20 lg:px-12 sm:px-6 px-4 py-12 bg-gray-50">
+    <footer className="xl:px-20 lg:px-12 sm:px-6 px-4 py-12 bg-gray-50 h-60">
       <div className="flex flex-col items-center justify-center">
         <div>
           <img src="/assets/transparentlogo.png" alt="logo" className="object-contain w-32" />

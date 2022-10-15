@@ -48,20 +48,16 @@ const MobileFilter = ({
 
       {showFilters && (
         <div className="fixed inset-0 z-10 bg-black bg-opacity-25">
-          <div ref={filterMenuRef} className="bg-white w-48 h-full shadow-xl">
-            <SimpleBar style={{ maxHeight: "100%", scrollBehavior: "smooth" }} className="px-4">
-              <h4 className="text-lg text-gray-600 font-semibold py-1 mt-8">Filter</h4>
-
-              <div className="py-4">
-                <FilterBar
-                  categories={categories}
-                  subCategories={subCategories}
-                  flavours={flavours}
-                  onPriceChange={onPriceChange}
-                  onFlavourChange={onFlavourChange}
-                  selectedFlavours={selectedFlavours}
-                />
-              </div>
+          <div ref={filterMenuRef} className="bg-white w-60 h-full shadow-xl">
+            <SimpleBar style={{ maxHeight: "100%", scrollBehavior: "smooth" }}>
+              <FilterBar
+                categories={categories}
+                subCategories={subCategories}
+                flavours={flavours}
+                onPriceChange={onPriceChange}
+                onFlavourChange={onFlavourChange}
+                selectedFlavours={selectedFlavours}
+              />
             </SimpleBar>
           </div>
         </div>

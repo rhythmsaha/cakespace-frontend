@@ -70,7 +70,7 @@ const LoginPage: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="w-full max-w-sm sm:max-w-md mx-auto">
+      <section className="w-11/12 max-w-sm sm:max-w-md mx-auto">
         <div>
           <Image height={112} width={112} className="mx-auto w-auto" src="/assets/Logo.png" alt="Your Company" />
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">

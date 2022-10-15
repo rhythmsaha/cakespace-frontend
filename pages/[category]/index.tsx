@@ -51,7 +51,7 @@ const Category: NextPageWithLayout<Props> = ({ category, categories, flavours, s
         </SimpleBar>
       </aside>
 
-      <div className="flex-1 my-10 overflow-y-auto lg:pl-10 lg:pr-14">
+      <div className="flex-1 py-10 lg:pl-10 lg:pr-14 overflow-y-auto">
         <div className="flex justify-between lg:justify-end items-center gap-4 py-4 w-full">
           <MobileFilter
             categories={categories}

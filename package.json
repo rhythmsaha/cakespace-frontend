@@ -24,6 +24,7 @@
         "react-hot-toast": "^2.4.0",
         "react-redux": "^8.0.2",
         "react-responsive-carousel": "^3.2.23",
+        "react-sticky-box": "^1.0.2",
         "react-use": "^17.4.0",
         "simplebar-react": "^2.4.3"
     },

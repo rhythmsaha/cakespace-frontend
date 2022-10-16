@@ -21,21 +21,25 @@ interface Props {
 
 const Home: NextPageWithLayout<Props> = ({ categories, featuredProducts }) => {
   return (
-    <div className="lg:w-3/4 mx-auto mt-4 pb-20">
+    <div className="pb-20">
       <Head>
         <title>Cakespace</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Banner />
+      <div className="mx-auto lg:w-3/4 lg:mt-2">
+        <Banner />
+      </div>
 
-      <section className="my-20">
-        <Categories categories={categories} />
-      </section>
+      <main className="mx-auto w-11/12 lg:w-3/4">
+        <section className="my-20 px-4">
+          <Categories categories={categories} />
+        </section>
 
-      <section className="my-10">
-        <FeaturedSection featured={featuredProducts} />
-      </section>
+        <section className="my-10">
+          <FeaturedSection featured={featuredProducts} />
+        </section>
+      </main>
     </div>
   );
 };

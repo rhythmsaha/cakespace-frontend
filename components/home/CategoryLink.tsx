@@ -22,7 +22,7 @@ const CategoryLink = ({ category }: Props) => {
         />
 
         <div className="absolute inset-x-0 bottom-0  bg-black bg-opacity-60 flex items-center justify-center">
-          <h4 className="text-white font-semibold text-sm sm:text-base text-center p-4">{name}</h4>
+          <h4 className="text-white font-semibold text-xs sm:text-base text-center p-4">{name}</h4>
         </div>
       </NextLink>
     </div>

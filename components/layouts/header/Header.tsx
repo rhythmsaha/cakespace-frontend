@@ -2,7 +2,7 @@ import { Bars2Icon } from "@heroicons/react/20/solid";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 
 import Image from "next/future/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Avatar, NextLink } from "../../ui";
 import Sidebar from "../sidebar";
@@ -18,7 +18,7 @@ const Header = () => {
   };
 
   return (
-    <header className="border-b sticky top-0 bg-white z-10">
+    <header className={`border-b bg-white z-10 sticky top-0`}>
       <div className="w-11/12 mx-auto h-20 flex items-center justify-between gap-6 relative">
         <button className="p-2 lg2:hidden" onClick={toggleSidebar}>
           <Bars2Icon className="h-6" />

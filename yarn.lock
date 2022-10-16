@@ -253,6 +253,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-sticky-box@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@types/react-sticky-box/-/react-sticky-box-0.8.0.tgz#bd6068e6cd9d161774854349f7ee3bd6cd9607d0"
+  integrity sha512-bkAkKBlwAXJNoEyxjwe2bZ0eHJBPKSb037IQltGpc6YhVrfDZzfmTQ/FQyuWhDXQuUMWvwZNWWR6gRyUP2Zxxg==
+  dependencies:
+    react-sticky-box "*"
+
 "@types/react@*", "@types/react@18.0.20":
   version "18.0.20"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.20.tgz#e4c36be3a55eb5b456ecf501bd4a00fd4fd0c9ab"
@@ -1995,7 +2002,7 @@ react-responsive-carousel@^3.2.23:
     prop-types "^15.5.8"
     react-easy-swipe "^0.0.21"
 
-react-sticky-box@^1.0.2:
+react-sticky-box@*, react-sticky-box@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-sticky-box/-/react-sticky-box-1.0.2.tgz#7e72a0f237bdf8270cec9254337f49519a411174"
   integrity sha512-Kyvtppdtv1KqJyNU4DtrSMI0unyQRgtraZvVQ0GAazVbYiTsIVpyhpr+5R0Aavzu4uJNSe1awj2rk/qI7i6Zfw==

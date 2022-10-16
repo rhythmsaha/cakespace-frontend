@@ -1,12 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
-import Image from "next/future/image";
 import { Fragment } from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { useLogout } from "../../../hooks/useLogout";
-
+import { useLogout, useAppSelector } from "../../../hooks";
 import { NextLink } from "../../ui";
+import Image from "next/future/image";
 
 interface Props {
   isOpen: boolean;

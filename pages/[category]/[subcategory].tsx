@@ -36,18 +36,16 @@ const Subcategory: NextPageWithLayout<Props> = ({ category, subcategory, categor
 
   return (
     <div className="flex gap-6">
-      <div className="border-r hidden lg:block">
+      <div className="border-r hidden lg:block browse-main-height">
         <StickyBox offsetTop={80} offsetBottom={20}>
-          <div className="browse-main-height">
-            <FilterBar
-              categories={categories}
-              subCategories={subCategories}
-              flavours={flavours}
-              onPriceChange={handlePriceChange}
-              onFlavourChange={handleFlavourChange}
-              selectedFlavours={selectedFlavours}
-            />
-          </div>
+          <FilterBar
+            categories={categories}
+            subCategories={subCategories}
+            flavours={flavours}
+            onPriceChange={handlePriceChange}
+            onFlavourChange={handleFlavourChange}
+            selectedFlavours={selectedFlavours}
+          />
         </StickyBox>
       </div>
 

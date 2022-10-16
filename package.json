@@ -13,6 +13,7 @@
         "@heroicons/react": "^2.0.11",
         "@reduxjs/toolkit": "^1.8.5",
         "@tailwindcss/forms": "^0.5.3",
+        "@types/react-sticky-box": "^0.8.0",
         "axios": "^0.27.2",
         "jwt-decode": "^3.1.2",
         "next": "12.3.1",

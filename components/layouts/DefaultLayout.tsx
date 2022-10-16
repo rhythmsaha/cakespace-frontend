@@ -8,9 +8,9 @@ interface Props {
 
 const DefaultLayout = ({ children }: Props) => {
   return (
-    <div className="min-h-screen">
+    <div>
       <Header />
-      <>{children}</>
+      {children}
       <Footer />
     </div>
   );

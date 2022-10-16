@@ -41,6 +41,7 @@ const AuthProvider = ({ children }: Props) => {
 
         if (user) {
           setSession(authToken);
+          dispatch(initialize());
           dispatch(login({ user, authToken }));
         }
       })

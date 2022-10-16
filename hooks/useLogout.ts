@@ -2,7 +2,7 @@ import { logout } from "../store/slices/auth/slice";
 import setSession from "../utils/jwt";
 import useAppDispatch from "./useAppDispatch";
 
-export const useLogout = () => {
+const useLogout = () => {
   const dispatch = useAppDispatch();
   const logoutHandler = () => {
     dispatch(logout());
@@ -11,3 +11,5 @@ export const useLogout = () => {
 
   return { logoutHandler };
 };
+
+export default useLogout;

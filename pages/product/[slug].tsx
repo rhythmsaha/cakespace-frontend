@@ -1,22 +1,16 @@
+import { useEffect } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import DefaultLayout from "../../components/layouts/DefaultLayout";
 import { Product } from "../../types/product";
 import { axios } from "../../utils";
 import { NextPageWithLayout } from "../_app";
-import { useEffect } from "react";
-
 import ProductImageDesktop from "../../components/Product/ProductImagesDesktop";
 import MobileImageBanner from "../../components/Product/MobileImageBanner";
 import ProductDescription from "../../components/Product/ProductDescription";
-
-const reviews = { href: "#", average: 4, totalCount: 117 };
+import StickyBox from "react-sticky-box";
 
 interface Props {
   product: Product;
-}
-
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(" ");
 }
 
 const ProductPage: NextPageWithLayout<Props> = ({ product }) => {
@@ -31,7 +25,9 @@ const ProductPage: NextPageWithLayout<Props> = ({ product }) => {
     <div className="min-h-screen max-w-7xl mx-auto lg:w-11/12">
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:py-10">
         <section className="hidden lg:block">
-          <ProductImageDesktop images={product.images} />
+          <StickyBox offsetTop={121}>
+            <ProductImageDesktop images={product.images} />
+          </StickyBox>
         </section>
 
         <section className="lg:hidden">
@@ -54,7 +50,8 @@ export default ProductPage;
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const response = await axios.get(`/products/${context.params?.slug}`);
-  const product = response.data;
+  const product = response.data.product;
+  console.log(response.data.relatedProducts);
 
   return {
     props: {

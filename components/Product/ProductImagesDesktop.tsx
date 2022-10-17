@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
+import Service from "./Service";
 
 interface Props {
   images: string[];
@@ -34,6 +35,16 @@ const ProductImageDesktop: React.FC<Props> = ({ images }) => {
           objectFit="cover"
           className=""
         />
+
+        <p className="text-xs text-center p-4 text-gray-400">
+          <span className="font-medium ">Note: </span>
+          Design and icing of cake may vary from the image shown here since each chef has his/her own way of baking and
+          designing a cake.
+        </p>
+
+        <div className="mt-4">
+          <Service />
+        </div>
       </div>
     </section>
   );

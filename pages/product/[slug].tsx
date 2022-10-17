@@ -5,7 +5,6 @@ import { axios } from "../../utils";
 import { NextPageWithLayout } from "../_app";
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { RadioGroup } from "@headlessui/react";
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 

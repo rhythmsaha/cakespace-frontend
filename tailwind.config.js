@@ -7,6 +7,7 @@ module.exports = {
         xs: "320px",
         lg2: "1200px",
       },
+
     },
   },
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],

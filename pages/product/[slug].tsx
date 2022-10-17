@@ -3,8 +3,11 @@ import DefaultLayout from "../../components/layouts/DefaultLayout";
 import { Product } from "../../types/product";
 import { axios } from "../../utils";
 import { NextPageWithLayout } from "../_app";
-import { useEffect, useState } from "react";
-import { StarIcon } from "@heroicons/react/20/solid";
+import { useEffect } from "react";
+
+import ProductImageDesktop from "../../components/Product/ProductImagesDesktop";
+import MobileImageBanner from "../../components/Product/MobileImageBanner";
+import ProductDescription from "../../components/Product/ProductDescription";
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
@@ -25,95 +28,24 @@ const ProductPage: NextPageWithLayout<Props> = ({ product }) => {
   }, [product]);
 
   return (
-    <div className="bg-white">
-      <div className="pt-6">
-        <nav aria-label="Breadcrumb">
-          <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-            <li className="text-sm">
-              <a href={product.slug} aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
-                {product.name}
-              </a>
-            </li>
-          </ol>
-        </nav>
+    <div className="min-h-screen max-w-7xl mx-auto lg:w-11/12">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:py-10">
+        <section className="hidden lg:block">
+          <ProductImageDesktop images={product.images} />
+        </section>
 
-        {/* Image gallery */}
-        <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8"></div>
+        <section className="lg:hidden">
+          <MobileImageBanner images={product.images} />
+        </section>
 
-        {/* Product info */}
-        <div className="mx-auto max-w-2xl px-4 pt-10 pb-16 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pt-16 lg:pb-24">
-          <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
-          </div>
-
-          {/* Options */}
-          <div className="mt-4 lg:row-span-3 lg:mt-0">
-            <h2 className="sr-only">Product information</h2>
-            <p className="text-3xl tracking-tight text-gray-900">{product.price}</p>
-
-            {/* Reviews */}
-            <div className="mt-6">
-              <h3 className="sr-only">Reviews</h3>
-              <div className="flex items-center">
-                <div className="flex items-center">
-                  {[0, 1, 2, 3, 4].map((rating) => (
-                    <StarIcon
-                      key={rating}
-                      className={classNames(
-                        reviews.average > rating ? "text-gray-900" : "text-gray-200",
-                        "h-5 w-5 flex-shrink-0"
-                      )}
-                      aria-hidden="true"
-                    />
-                  ))}
-                </div>
-                <p className="sr-only">{reviews.average} out of 5 stars</p>
-                <a href={reviews.href} className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                  {reviews.totalCount} reviews
-                </a>
-              </div>
-            </div>
-
-            <form className="mt-10">
-              {/* Colors */}
-              <div>
-                <h3 className="text-sm font-medium text-gray-900">Color</h3>
-              </div>
-
-              {/* Sizes */}
-              <div className="mt-10">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                  <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                    Size guide
-                  </a>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Add to bag
-              </button>
-            </form>
-          </div>
-
-          <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pb-16 lg:pr-8">
-            <div className="mt-10">
-              <div className="mt-4 space-y-6">
-                <article
-                  className="prose prose-slate"
-                  dangerouslySetInnerHTML={{ __html: product.description }}
-                ></article>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        <section className="px-4 sm:px-6 lg:px-0">
+          <ProductDescription product={product} />
+        </section>
+      </section>
     </div>
   );
 };
+
 ProductPage.getLayout = (page) => {
   return <DefaultLayout>{page}</DefaultLayout>;
 };

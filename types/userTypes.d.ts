@@ -22,12 +22,12 @@ export interface LoginFields {
 
 export interface CartType {
   user?: string;
-  items?: {
+  items: {
     product: Product;
     quantity: number;
     totalPrice: number;
   }[];
 
-  totalAmount?: number;
-  totalQuantity?: number;
+  totalAmount: number;
+  totalQuantity: number;
 }

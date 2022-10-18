@@ -4,23 +4,33 @@ import { BoltIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import RatingsBadge from "./RatingsBadge";
 import useCart from "../../hooks/useCart";
 import { useAppSelector } from "../../hooks";
+import { useRouter } from "next/router";
 
 interface Props {
   product: Product;
 }
 
 const ProductDescription: React.FC<Props> = ({ product }) => {
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
   const cartItems = useAppSelector((state) => state.cart.items);
-  const { cartLoading, addToCart, removeFromCart } = useCart();
+  const { addToCart, deleteItemFromCart } = useCart();
 
+  const router = useRouter();
   const addedToCart = cartItems?.find((item) => item.product._id === product._id);
 
   const _addToCartHandler = () => {
+    if (!isAuthenticated) return router.push("/login");
+
     if (addedToCart) {
-      removeFromCart(product._id);
+      deleteItemFromCart(product._id);
     } else {
       addToCart(product._id);
     }
+  };
+
+  const buyNowHandler = () => {
+    _addToCartHandler();
+    router.push("/checkout");
   };
 
   return (
@@ -74,6 +84,7 @@ const ProductDescription: React.FC<Props> = ({ product }) => {
           <button
             className="w-full py-3 px-6 bg-pink-500 text-white rounded-md flex items-center justify-center gap-4 disabled:bg-gray-300 disabled:text-gray-500 font-medium"
             disabled={product.stocks === 0}
+            onClick={buyNowHandler}
           >
             <span>Buy Now</span>
             <BoltIcon className="h-5 w-5" />

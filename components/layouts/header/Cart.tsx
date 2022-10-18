@@ -1,5 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { ShoppingBagIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks";
 import useCart from "../../../hooks/useCart";
@@ -10,7 +11,8 @@ const Cart = () => {
   const { isAuthenticated, isInitialized } = useAppSelector((state) => state.auth);
   const { items, totalAmount, totalQuantity } = useAppSelector((state) => state.cart);
 
-  const { cartLoading, addToCart, clearCart, fetchCart, removeFromCart } = useCart();
+  const { cartLoading, addToCart, clearCart, fetchCart, removeFromCart, deleteItemFromCart } = useCart();
+  const router = useRouter();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -19,9 +21,20 @@ const Cart = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
+  const cartButtonClickHandler = () => {
+    if (!isAuthenticated) return router.push("/login");
+    setOpen(true);
+  };
+
   return (
     <>
-      <button className="relative aspect-square w-10" onClick={() => setOpen(true)}>
+      <button className="relative aspect-square w-10" onClick={cartButtonClickHandler}>
+        {totalQuantity > 0 && (
+          <span className="absolute right-0 -top-1 flex items-center justify-center h-4 w-4 rounded-full bg-red-600 text-white font-mono text-xs leading-none">
+            {totalQuantity}
+          </span>
+        )}
+
         <div className="flex flex-col items-center justify-center">
           <ShoppingBagIcon className="h-6" />
           <p className="text-xs font-semibold text-gray-600">Bag</p>

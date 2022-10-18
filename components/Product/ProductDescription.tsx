@@ -3,13 +3,25 @@ import numeral from "numeral";
 import { BoltIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import RatingsBadge from "./RatingsBadge";
 import useCart from "../../hooks/useCart";
+import { useAppSelector } from "../../hooks";
 
 interface Props {
   product: Product;
 }
 
 const ProductDescription: React.FC<Props> = ({ product }) => {
+  const cartItems = useAppSelector((state) => state.cart.items);
   const { cartLoading, addToCart, removeFromCart } = useCart();
+
+  const addedToCart = cartItems?.find((item) => item.product._id === product._id);
+
+  const _addToCartHandler = () => {
+    if (addedToCart) {
+      removeFromCart(product._id);
+    } else {
+      addToCart(product._id);
+    }
+  };
 
   return (
     <div className="lg:px-6">
@@ -52,9 +64,10 @@ const ProductDescription: React.FC<Props> = ({ product }) => {
           <button
             className="w-full py-3 px-6 disabled:bg-gray-300 disabled:text-gray-500 font-medium bg-indigo-600 text-white rounded-md flex items-center justify-center gap-4"
             disabled={product.stocks === 0}
-            onClick={addToCart.bind(null, product._id)}
+            onClick={_addToCartHandler}
           >
-            <span>Add to Cart</span>
+            {addedToCart ? <span>Added to Cart</span> : <span>Add to Cart</span>}
+
             <ShoppingBagIcon className="h-5 w-5" />
           </button>
 

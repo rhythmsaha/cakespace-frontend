@@ -25,22 +25,25 @@ const useCart = () => {
   };
 
   const addToCart = async (id: string) => {
+    if (cartLoading) return;
+
     setCartLoading(true);
     try {
       const response = await axios.put("/cart", { productId: id });
       const cart: CartType = await response.data.cart;
 
+      setCartLoading(false);
       dispatch(updateCart(cart));
     } catch (error) {
+      setCartLoading(false);
       toast.error("Failed to Fetch Cart!");
     }
-
-    setCartLoading(false);
   };
 
   const removeFromCart = async (id: string) => {
-    setCartLoading(true);
+    if (cartLoading) return;
     try {
+      setCartLoading(true);
       const response = await axios.delete("/cart", {
         data: {
           productId: id,
@@ -48,15 +51,16 @@ const useCart = () => {
       });
       const cart: CartType = await response.data.cart;
 
+      setCartLoading(false);
       dispatch(updateCart(cart));
     } catch (error) {
+      setCartLoading(false);
       toast.error("Failed to Fetch Cart!");
     }
-
-    setCartLoading(false);
   };
 
   const clearCart = async () => {
+    if (cartLoading) return;
     setCartLoading(true);
     try {
       const response = await axios.delete("/cart/clear");

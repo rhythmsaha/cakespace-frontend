@@ -9,6 +9,7 @@ const Cart = () => {
 
   const { isAuthenticated, isInitialized } = useAppSelector((state) => state.auth);
   const { items, totalAmount, totalQuantity } = useAppSelector((state) => state.cart);
+
   const { cartLoading, addToCart, clearCart, fetchCart, removeFromCart } = useCart();
 
   useEffect(() => {

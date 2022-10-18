@@ -30,7 +30,8 @@ const Product = ({ name, images, price, stock, slug }: Props) => {
           <p className="text-indigo-600 font-medium">₹{numeral(price).format("0,0.00")}</p>
 
           <div className="flex items-center gap-1 text-xs py-4">
-            <p className="text-gray-500">Free Delivery</p>
+            {stock !== 0 && <p className="text-gray-500">Free Delivery</p>}
+            {stock === 0 && <span className="text-red-500 font-medium">Out of Stock</span>}
             {stock !== 0 && <span className="text-emerald-500 font-medium">In Stock</span>}
           </div>
         </div>

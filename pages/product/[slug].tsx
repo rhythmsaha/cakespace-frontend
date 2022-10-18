@@ -8,6 +8,7 @@ import ProductImageDesktop from "../../components/Product/ProductImagesDesktop";
 import MobileImageBanner from "../../components/Product/MobileImageBanner";
 import ProductDescription from "../../components/Product/ProductDescription";
 import StickyBox from "react-sticky-box";
+import Reviews from "../../components/Product/Reviews";
 
 interface Props {
   product: Product;
@@ -38,6 +39,10 @@ const ProductPage: NextPageWithLayout<Props> = ({ product }) => {
           <ProductDescription product={product} />
         </section>
       </section>
+
+      <section className="mx-auto mt-10 w-11/12 lg:w-full">
+        <Reviews />
+      </section>
     </div>
   );
 };
@@ -51,7 +56,6 @@ export default ProductPage;
 export const getStaticProps: GetStaticProps = async (context) => {
   const response = await axios.get(`/products/${context.params?.slug}`);
   const product = response.data.product;
-  console.log(response.data.relatedProducts);
 
   return {
     props: {

@@ -40,16 +40,32 @@ const ProductDescription: React.FC<Props> = ({ product }) => {
         </span>
       </div>
 
-      <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-2">
-        <button className="w-full py-3 px-6 bg-indigo-600 text-white rounded-md flex items-center justify-center gap-4">
-          <span>Add to Cart</span>
-          <ShoppingBagIcon className="h-5 w-5" />
-        </button>
+      <div className="mt-10">
+        <div className="mb-2">
+          {product.stocks === 0 ? (
+            <p className=" p-1 text-xs text-red-500 font-medium">Out of stock!</p>
+          ) : product.stocks < 10 ? (
+            <p className=" p-1 text-xs text-red-500 font-medium">Hurry, only {product.stocks} items left in stock!</p>
+          ) : null}
+        </div>
 
-        <button className="w-full py-3 px-6 bg-pink-500 text-white rounded-md flex items-center justify-center gap-4">
-          <span>Buy Now</span>
-          <BoltIcon className="h-5 w-5" />
-        </button>
+        <div className=" grid grid-cols-1 lg:grid-cols-2 gap-2">
+          <button
+            className="w-full py-3 px-6 disabled:bg-gray-300 disabled:text-gray-500 font-medium bg-indigo-600 text-white rounded-md flex items-center justify-center gap-4"
+            disabled={product.stocks === 0}
+          >
+            <span>Add to Cart</span>
+            <ShoppingBagIcon className="h-5 w-5" />
+          </button>
+
+          <button
+            className="w-full py-3 px-6 bg-pink-500 text-white rounded-md flex items-center justify-center gap-4 disabled:bg-gray-300 disabled:text-gray-500 font-medium"
+            disabled={product.stocks === 0}
+          >
+            <span>Buy Now</span>
+            <BoltIcon className="h-5 w-5" />
+          </button>
+        </div>
       </div>
 
       <section className="mt-8">

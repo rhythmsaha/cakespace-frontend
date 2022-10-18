@@ -10,5 +10,4 @@ export interface Product {
   price: number;
   images: string[];
   stocks: number;
-  stock: number;
 }

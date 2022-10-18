@@ -1,15 +1,10 @@
-import { Dialog, Transition } from "@headlessui/react";
 import { Bars2Icon } from "@heroicons/react/20/solid";
-import { ShoppingBagIcon, XMarkIcon } from "@heroicons/react/24/outline";
-
 import Image from "next/future/image";
 import { Router } from "next/router";
-import { Fragment, useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 import { NextLink } from "../../ui";
 import Sidebar from "../sidebar";
 import Cart from "./Cart";
-
 import Navbar from "./Navbar";
 import ProfileMenu from "./ProfileMenu";
 import SearchBar from "./SearchBar";

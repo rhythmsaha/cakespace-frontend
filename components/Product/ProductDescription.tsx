@@ -1,13 +1,16 @@
 import type { Product } from "../../types/product";
-import { StarIcon } from "@heroicons/react/20/solid";
 import numeral from "numeral";
 import { BoltIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
+import RatingsBadge from "./RatingsBadge";
+import useCart from "../../hooks/useCart";
 
 interface Props {
   product: Product;
 }
 
 const ProductDescription: React.FC<Props> = ({ product }) => {
+  const { cartLoading, addToCart, removeFromCart } = useCart();
+
   return (
     <div className="lg:px-6">
       <div>
@@ -15,13 +18,7 @@ const ProductDescription: React.FC<Props> = ({ product }) => {
       </div>
 
       <div className="flex items-center gap-2 my-2">
-        <span className="flex gap-1 items-center bg-green-600 rounded-md text-white px-2 py-1 justify-center">
-          <span className="text-xs sm:text-sm font-medium">4.8</span>
-          <span>
-            <StarIcon className="h-3.5 w-3.5" />
-          </span>
-        </span>
-
+        <RatingsBadge />
         <p className="text-sm text-gray-500">Ratings & 222 Reviews</p>
       </div>
 
@@ -34,11 +31,13 @@ const ProductDescription: React.FC<Props> = ({ product }) => {
         <p className="text-sm text-gray-600">Inclusive of all taxes.</p>
       </div>
 
-      <div className="mt-6">
-        <span className="shadow-md px-4 py-2 text-sm border font-medium text-gray-500 rounded-md">
-          {product.weight}g
-        </span>
-      </div>
+      {product.weight && (
+        <div className="mt-6">
+          <span className="shadow-md px-4 py-2 text-sm border font-medium text-gray-500 rounded-md">
+            {product.weight}g
+          </span>
+        </div>
+      )}
 
       <div className="mt-10">
         <div className="mb-2">
@@ -53,6 +52,7 @@ const ProductDescription: React.FC<Props> = ({ product }) => {
           <button
             className="w-full py-3 px-6 disabled:bg-gray-300 disabled:text-gray-500 font-medium bg-indigo-600 text-white rounded-md flex items-center justify-center gap-4"
             disabled={product.stocks === 0}
+            onClick={addToCart.bind(null, product._id)}
           >
             <span>Add to Cart</span>
             <ShoppingBagIcon className="h-5 w-5" />
@@ -70,7 +70,10 @@ const ProductDescription: React.FC<Props> = ({ product }) => {
 
       <section className="mt-8">
         <h3 className="text-xl font-semibold text-gray-700">Description</h3>
-        <article className="prose" dangerouslySetInnerHTML={{ __html: product.description }} />
+        <article
+          className="prose  prose-ul:space-y-0 prose-ul:m-0 prose-li:m-0 prose-p:m-0 prose-p:text-sm prose-li:text-sm"
+          dangerouslySetInnerHTML={{ __html: product.description }}
+        />
       </section>
 
       <div className="mt-6">

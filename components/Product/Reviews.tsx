@@ -1,13 +1,36 @@
 import ReactStickyBox from "react-sticky-box";
 import OverallRatings from "./OverallRatings";
+import Review from "./Review";
 
 const Reviews = () => {
   return (
-    <div className="grid gap-6">
+    <div className="space-y-6 py-20">
       <div className="">
-        <ReactStickyBox offsetTop={90}>
-          <OverallRatings />
-        </ReactStickyBox>
+        <OverallRatings />
+      </div>
+
+      <div className="space-y-4">
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
+        <Review />
       </div>
     </div>
   );

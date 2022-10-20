@@ -4,7 +4,7 @@ import { Router } from "next/router";
 import { useEffect, useState } from "react";
 import { NextLink } from "../../ui";
 import Sidebar from "../sidebar";
-import Cart from "./Cart";
+import Cart from "./cart";
 import Navbar from "./Navbar";
 import ProfileMenu from "./ProfileMenu";
 import SearchBar from "./SearchBar";

@@ -51,7 +51,7 @@ const LoginPage: NextPageWithLayout = () => {
       dispath(login({ authToken, user }));
       toast.success(message);
       setSession(authToken);
-      router.push("/");
+      router.push(`/`);
     } catch (error: any) {
       if (error?.fields && error.fields.length > 0) {
         error.fields.forEach((field: FieldErrorPath) => {

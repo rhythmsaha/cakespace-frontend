@@ -20,14 +20,15 @@ export interface LoginFields {
   remember: boolean;
 }
 
+export interface CartItem {
+  product: Product;
+  quantity: number;
+  totalPrice: number;
+}
+
 export interface CartType {
   user?: string;
-  items: {
-    product: Product;
-    quantity: number;
-    totalPrice: number;
-  }[];
-
+  items: CartItem[];
   totalAmount: number;
   totalQuantity: number;
 }

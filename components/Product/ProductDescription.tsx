@@ -28,8 +28,9 @@ const ProductDescription: React.FC<Props> = ({ product }) => {
     }
   };
 
-  const buyNowHandler = () => {
-    _addToCartHandler();
+  const buyNowHandler = async () => {
+    if (!isAuthenticated) return router.push("/login");
+    if (!addedToCart) await addToCart(product._id);
     router.push("/checkout");
   };
 

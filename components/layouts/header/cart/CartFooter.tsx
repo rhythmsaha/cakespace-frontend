@@ -1,11 +1,13 @@
+import Link from "next/link";
 import { useAppSelector } from "../../../../hooks";
+import { NextLink } from "../../../ui";
 
 interface Props {
   onClose: () => void;
 }
 
 const CartFooter: React.FC<Props> = ({ onClose }) => {
-  const { totalAmount, totalQuantity } = useAppSelector((state) => state.cart);
+  const { totalAmount } = useAppSelector((state) => state.cart);
 
   return (
     <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
@@ -15,21 +17,19 @@ const CartFooter: React.FC<Props> = ({ onClose }) => {
       </div>
       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
       <div className="mt-6">
-        <a
-          href="#"
+        <NextLink
+          href="/checkout"
           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
         >
           Checkout
-        </a>
+        </NextLink>
       </div>
-      <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-        <p>
-          or
-          <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500" onClick={onClose}>
-            Continue Shopping
-            <span aria-hidden="true"> &rarr;</span>
-          </button>
-        </p>
+      <div className="mt-6 flex gap-1 justify-center text-center text-sm text-gray-500">
+        <p>or</p>
+        <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500" onClick={onClose}>
+          Continue Shopping
+          <span aria-hidden="true"> &rarr;</span>
+        </button>
       </div>
     </div>
   );

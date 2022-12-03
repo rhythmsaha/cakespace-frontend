@@ -32,6 +32,10 @@
   min-height: calc(100vh - 81px);
 }
 
+.page-height-min {
+  min-height: calc(100vh - 81px - 240px);
+}
+
 .simplebar-track.simplebar-vertical .simplebar-scrollbar:before {
   background: lightgray;
 }

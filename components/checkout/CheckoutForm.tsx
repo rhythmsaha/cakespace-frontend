@@ -7,6 +7,7 @@ import PaymentSuccess from "./PaymentSuccess";
 import PaymentFailed from "./PaymentFailed";
 import { PaymentIntent } from "@stripe/stripe-js";
 import useCart from "../../hooks/useCart";
+import PaymentProcessing from "./PaymentProcessing";
 
 interface Props {
   orderId: string;
@@ -182,6 +183,9 @@ const CheckoutForm = ({ orderId }: Props) => {
       )}
 
       {paymentStatus === "succeeded" && <PaymentSuccess paymentIntent={paymentIntent} />}
+      {paymentStatus === "failed" && <PaymentFailed paymentIntent={paymentIntent} />}
+      {paymentStatus === "requires_payment_method" && <PaymentFailed paymentIntent={paymentIntent} />}
+      {paymentStatus === "processing" && <PaymentProcessing paymentIntent={paymentIntent} />}
     </div>
   );
 };

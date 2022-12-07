@@ -6,7 +6,6 @@ import { useAppSelector } from "../../hooks";
 import PaymentSuccess from "./PaymentSuccess";
 import PaymentFailed from "./PaymentFailed";
 import { PaymentIntent } from "@stripe/stripe-js";
-import useCart from "../../hooks/useCart";
 import PaymentProcessing from "./PaymentProcessing";
 
 interface Props {
@@ -41,6 +40,7 @@ const CheckoutForm = ({ orderId }: Props) => {
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+      console.log(paymentIntent);
       setPaymentIntent(paymentIntent);
       switch (paymentIntent?.status) {
         case "succeeded":
@@ -122,7 +122,7 @@ const CheckoutForm = ({ orderId }: Props) => {
                 </div>
 
                 <form id="payment-form" onSubmit={handleSubmit} className="min-w-max mt-6">
-                  {/* <div className="mb-6">
+                  <div className="mb-6">
                     <h3 className="font-medium text-gray-800 mb-2">Shipping Address</h3>
 
                     <AddressElement
@@ -146,7 +146,7 @@ const CheckoutForm = ({ orderId }: Props) => {
                         },
                       }}
                     />
-                  </div> */}
+                  </div>
 
                   <PaymentElement id="payment-element" options={{}} />
 
@@ -156,7 +156,7 @@ const CheckoutForm = ({ orderId }: Props) => {
                     type="submit"
                     className="bg-indigo-500 font-semibold text-white w-full px-4 py-2 rounded-lg mt-4 disabled:bg-indigo-300 disabled:cursor-not-allowed"
                   >
-                    <span id="button-text">{isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}</span>
+                    <span id="button-text">Pay now</span>
                   </button>
 
                   <button

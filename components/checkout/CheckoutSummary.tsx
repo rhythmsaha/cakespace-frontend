@@ -21,7 +21,7 @@ const CheckoutSummary = ({ orderId }: Props) => {
 
         <h4 className="mt-0.5 text-gray-800">
           Order ID:
-          {!orderId && <span className="ml-2">Generating...</span>}
+          {!orderId && <span className="ml-2 text-gray-500">Please wait...</span>}
           {orderId && <span className="ml-2 font-medium">{orderId}</span>}
         </h4>
       </div>

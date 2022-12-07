@@ -1,5 +1,6 @@
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { PaymentIntent } from "@stripe/stripe-js";
+import { useRouter } from "next/router";
 import { NextLink } from "../ui";
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
 }
 
 const PaymentSuccess = ({ paymentIntent }: Props) => {
+  const router = useRouter();
   return (
     <div className="h-full w-full flex items-center justify-center p-20">
       <div className="flex flex-col items-center p-10 border-2 border-gray-50 bg-white shadow-lg shadow-gray-200 rounded-xl w-full">
@@ -20,9 +22,12 @@ const PaymentSuccess = ({ paymentIntent }: Props) => {
             Your order number is <span className="font-medium">{paymentIntent?.created}</span>
           </p>
 
-          <NextLink href="#" className="mt-4 text-indigo-500 font-medium underline underline-offset-4">
+          <button
+            onClick={() => router.replace("/orders")}
+            className="mt-4 text-indigo-500 font-medium underline underline-offset-4"
+          >
             View Order
-          </NextLink>
+          </button>
         </div>
       </div>
     </div>

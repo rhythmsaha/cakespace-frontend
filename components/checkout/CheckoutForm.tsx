@@ -3,22 +3,13 @@ import { PaymentElement, useStripe, useElements, AddressElement } from "@stripe/
 import CheckoutSummary from "./CheckoutSummary";
 import { useRouter } from "next/router";
 import { useAppSelector } from "../../hooks";
-import PaymentSuccess from "./PaymentSuccess";
-import PaymentFailed from "./PaymentFailed";
-import { PaymentIntent } from "@stripe/stripe-js";
-import PaymentProcessing from "./PaymentProcessing";
 
 const CheckoutForm = () => {
-  const orderId = useAppSelector((state) => state.payment.orderId);
-
   const stripe = useStripe();
   const elements = useElements();
 
   const [cardError, setCardError] = useState<string | undefined>("");
-
   const [isLoading, setIsLoading] = useState(false);
-
-  const { user } = useAppSelector((state) => state.auth);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,11 +25,9 @@ const CheckoutForm = () => {
 
     const { error } = await stripe.confirmPayment({
       elements,
-
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url: "http://localhost:3000/payment",
-        receipt_email: user?.email,
       },
     });
 
@@ -58,84 +47,66 @@ const CheckoutForm = () => {
 
   return (
     <div>
-      <div className="flex justify-center md:justify-start items-center ">
-        <h2 className="font-semibold text-gray-700 text-xl py-4 md:text-2xl md:mt-4">
-          Complete your Order, {user?.firstName}
-        </h2>
+      <div>
+        <h2 className="text-lg lg:text-xl font-semibold lg:font-semibold text-gray-800">Complete your payment</h2>
+        <p className="text-base text-gray-600">Enter your card Details and verify to successfully place the order.</p>
       </div>
 
-      <section className="flex flex-col lg:flex-row-reverse gap-10 lg:gap-14 mt-10">
-        <section className="flex-1 ">
-          <CheckoutSummary orderId={orderId} />
-        </section>
+      <form id="payment-form" onSubmit={handleSubmit} className="min-w-max mt-6 w-full">
+        <div className="mb-6">
+          <h3 className="font-medium text-gray-800 mb-2">Shipping Address</h3>
 
-        <section className="flex-1">
-          <div>
-            <div>
-              <h2 className="text-lg lg:text-xl font-semibold lg:font-semibold text-gray-800">Complete your payment</h2>
-              <p className="text-base text-gray-600">
-                Enter your card Details and verify to successfully place the order.
-              </p>
+          <AddressElement
+            options={{
+              mode: "shipping",
+              autocomplete: {
+                mode: "disabled",
+              },
+              display: {
+                name: "split",
+              },
+              allowedCountries: ["IN"],
+
+              fields: {
+                phone: "always",
+              },
+              validation: {
+                phone: {
+                  required: "always",
+                },
+              },
+            }}
+          />
+        </div>
+
+        <PaymentElement id="payment-element" options={{}} />
+
+        <button
+          disabled={isLoading || !stripe || !elements}
+          id="submit"
+          type="submit"
+          className="bg-indigo-500 font-semibold text-white w-full px-4 py-2 rounded-lg mt-4 disabled:bg-indigo-300 disabled:cursor-not-allowed"
+        >
+          <span id="button-text">Pay now</span>
+        </button>
+
+        <button
+          type="button"
+          className="border-indigo-500 border-2 text-indigo-500 w-full px-4 py-2 rounded-lg mt-4 font-medium hover:shadow-lg shadow-indigo-500"
+          disabled={isLoading}
+          onClick={() => router.back()}
+        >
+          Go Back
+        </button>
+
+        <div>
+          {cardError && (
+            <div className="bg-red-50 border-red-500 text-red-500 px-4 py-2 text-center text-sm rounded mt-4">
+              <p className="max-w-md text-center min-w-0">{cardError}</p>
             </div>
-
-            <form id="payment-form" onSubmit={handleSubmit} className="min-w-max mt-6">
-              {/* <div className="mb-6">
-                <h3 className="font-medium text-gray-800 mb-2">Shipping Address</h3>
-
-                <AddressElement
-                  options={{
-                    mode: "shipping",
-                    autocomplete: {
-                      mode: "disabled",
-                    },
-                    display: {
-                      name: "split",
-                    },
-                    allowedCountries: ["IN"],
-
-                    fields: {
-                      phone: "always",
-                    },
-                    validation: {
-                      phone: {
-                        required: "always",
-                      },
-                    },
-                  }}
-                />
-              </div> */}
-
-              <PaymentElement id="payment-element" options={{}} />
-
-              <button
-                disabled={isLoading || !stripe || !elements}
-                id="submit"
-                type="submit"
-                className="bg-indigo-500 font-semibold text-white w-full px-4 py-2 rounded-lg mt-4 disabled:bg-indigo-300 disabled:cursor-not-allowed"
-              >
-                <span id="button-text">Pay now</span>
-              </button>
-
-              <button
-                type="button"
-                className="border-indigo-500 border-2 text-indigo-500 w-full px-4 py-2 rounded-lg mt-4 font-medium hover:shadow-lg shadow-indigo-500"
-                disabled={isLoading}
-                onClick={() => router.back()}
-              >
-                Go Back
-              </button>
-
-              <div>
-                {cardError && (
-                  <div className="bg-red-50 border-red-500 text-red-500 px-4 py-2 text-center text-sm rounded mt-4">
-                    {cardError}
-                  </div>
-                )}
-              </div>
-            </form>
-          </div>
-        </section>
-      </section>
+          )}
+        </div>
+      </form>
     </div>
   );
 };

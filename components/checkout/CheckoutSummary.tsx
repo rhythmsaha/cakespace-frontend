@@ -2,11 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector } from "../../hooks";
 import useCart from "../../hooks/useCart";
 
-interface Props {
-  orderId: string;
-}
-
-const CheckoutSummary = ({ orderId }: Props) => {
+const CheckoutSummary = () => {
   const { items, totalAmount } = useAppSelector((state) => state.cart);
   const { fetchCart } = useCart();
 
@@ -17,13 +13,7 @@ const CheckoutSummary = ({ orderId }: Props) => {
   return (
     <div className="bg-white shadow-lg rounded-xl px-8 py-10">
       <div>
-        <h2 className="text-lg font-semibold text-gray-800">Order Summary</h2>
-
-        <h4 className="mt-0.5 text-gray-800">
-          Order ID:
-          {!orderId && <span className="ml-2 text-gray-500">Please wait...</span>}
-          {orderId && <span className="ml-2 font-medium">{orderId}</span>}
-        </h4>
+        <h2 className="text-lg font-semibold text-gray-800">Checkout Summary</h2>
       </div>
 
       <hr className="mt-4 border-gray-200" />

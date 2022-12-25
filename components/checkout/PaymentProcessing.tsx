@@ -1,28 +1,28 @@
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
-import { ClockIcon } from "@heroicons/react/24/outline";
-import { PaymentIntent } from "@stripe/stripe-js";
-import { NextLink } from "../ui";
+import { ThreeCircles } from "react-loader-spinner";
 
-interface Props {
-  paymentIntent: PaymentIntent | undefined;
-}
-
-const PaymentProcessing = ({ paymentIntent }: Props) => {
+const PaymentProcessing = () => {
   return (
-    <div className="h-full w-full flex items-center justify-center p-20">
-      <div className="flex flex-col items-center p-10 border-2 border-gray-50 bg-white shadow-lg shadow-gray-200 rounded-xl w-full">
-        <span>
-          <ClockIcon className="h-20 text-indigo-500" />
-        </span>
-        <p className="text-xl font-semibold text-indigo-600">Your Payment is proccessing!</p>
-        <p className="text-xs text-gray-400">Please refresh to see updates!</p>
-
-        <div className="mt-2 flex flex-col items-center">
-          <p className="text-gray-800">
-            Your order number is <span className="font-medium">{paymentIntent?.created}</span>
-          </p>
-        </div>
-      </div>
+    <div className="flex flex-col items-center">
+      <span className="w-16 sm:w-20 lg:w-24">
+        <ThreeCircles
+          height="100%"
+          width="100%"
+          color="#4fa94d"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="loading"
+          outerCircleColor="#4f46e5"
+          innerCircleColor="#ec4899"
+          middleCircleColor="#4f46e5"
+        />
+      </span>
+      <p className="text-xl sm:text-2xl lg:text-4xl font-semibold text-gray-800 mt-4 lg:mt-6 text-center">
+        Please wait...
+      </p>
+      <p className="text-xl sm:text-2xl lg:text-4xl font-semibold text-gray-800 lg:mt-2 text-center">
+        we are fetching your payment info
+      </p>
     </div>
   );
 };

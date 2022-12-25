@@ -1,8 +1,11 @@
 import { useStripe } from "@stripe/react-stripe-js";
 import { PaymentIntent } from "@stripe/stripe-js";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import PaymentFailed from "../components/checkout/PaymentFailed";
 import PaymentProcessing from "../components/checkout/PaymentProcessing";
+import PaymentSuccess from "../components/checkout/PaymentSuccess";
 import AuthGuard from "../components/guards/AuthGuard";
 import Footer from "../components/layouts/footer";
 import PaymentProvider from "../components/layouts/PaymentProvider";
@@ -15,6 +18,7 @@ const PaymentPage: NextPageWithLayout = () => {
   const [paymentStatus, setPaymentStatus] = useState<paymentStatus>("processing");
 
   const stripe = useStripe();
+  const router = useRouter();
 
   useEffect(() => {
     if (!stripe) return;
@@ -33,7 +37,7 @@ const PaymentPage: NextPageWithLayout = () => {
           setPaymentStatus("processing");
           break;
         case "requires_payment_method":
-          setPaymentStatus("requires_payment_method");
+          router.replace("/checkout");
           break;
         default:
           setPaymentStatus("failed");
@@ -42,11 +46,33 @@ const PaymentPage: NextPageWithLayout = () => {
     });
   }, [stripe]);
 
+  if (paymentStatus === "processing") {
+    return (
+      <div className="w-10/12 mx-auto page-height-min flex items-center justify-center">
+        <PaymentProcessing />
+      </div>
+    );
+  }
+
+  if (paymentStatus === "succeeded") {
+    return (
+      <div className="page-height-min w-10/12 mx-auto py-10">
+        <PaymentSuccess paymentIntent={paymentIntent} />
+      </div>
+    );
+  }
+
+  if (paymentStatus === "failed") {
+    return (
+      <div className="page-height-min w-10/12 mx-auto py-10">
+        <PaymentFailed paymentIntent={paymentIntent} />
+      </div>
+    );
+  }
+
   return (
-    <div className="page-height-min">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor optio tenetur tempora voluptas in, delectus laborum
-      blanditiis recusandae harum voluptatem beatae velit accusantium. Ducimus quis quam ipsum illo excepturi sapiente.
-      {/* <RotatingLines strokeColor="grey" strokeWidth="5" animationDuration="0.75" width="96" visible={true} /> */}
+    <div className="w-10/12 mx-auto page-height-min flex items-center justify-center">
+      <PaymentProcessing />
     </div>
   );
 };

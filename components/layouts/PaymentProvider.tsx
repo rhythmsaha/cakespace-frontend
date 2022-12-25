@@ -39,7 +39,7 @@ const PaymentProvider = ({ children }: Props) => {
           })
         );
       })
-      .catch((err) => router.replace("/checkout"));
+      .catch((err) => router.replace("/"));
   }, [router]);
 
   const appearance = {

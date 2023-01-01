@@ -45,6 +45,8 @@ const CheckoutForm = () => {
     setIsLoading(false);
   };
 
+  const [showAddress, setShowAddress] = useState(false);
+
   return (
     <div>
       <div>

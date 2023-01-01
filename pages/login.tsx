@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import Head from "next/head";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { NextLink } from "../components/ui";

@@ -1,9 +1,10 @@
 import { Product } from "./product";
 
 export interface User {
-  firstName: string;
-  lastName: string;
-  email: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  gender?: string;
 }
 
 export interface RegistrationFields {
@@ -31,4 +32,10 @@ export interface CartType {
   items: CartItem[];
   totalAmount: number;
   totalQuantity: number;
+}
+
+export interface ProfileFields {
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
 }

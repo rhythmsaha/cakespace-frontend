@@ -73,6 +73,7 @@ const PersonalInformationForm = () => {
                 <Input
                   label="First Name"
                   defaultValue={user?.firstName}
+                  error={errors.firstName}
                   {...register("firstName", {
                     required: "First Name is required!",
                   })}
@@ -81,6 +82,7 @@ const PersonalInformationForm = () => {
                 <Input
                   label="Last Name"
                   defaultValue={user?.lastName}
+                  error={errors.lastName}
                   {...register("lastName", {
                     required: "Last Name is required!",
                   })}
@@ -148,7 +150,7 @@ const PersonalInformationForm = () => {
               <section className="mt-6 text-right">
                 <button
                   type="submit"
-                  className="rounded-md bg-indigo-600 py-2.5 px-8 text-sm font-medium text-white hover:bg-indigo-500 active:bg-indigo-600 transition w-full xl:w-auto"
+                  className="rounded-md bg-indigo-600 py-2.5 px-8 text-sm font-medium text-white hover:bg-indigo-500 active:bg-indigo-600 transition w-full md:w-auto"
                 >
                   Save
                 </button>

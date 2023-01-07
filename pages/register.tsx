@@ -8,12 +8,14 @@ import { toast } from "react-hot-toast";
 import { RegistrationFields } from "../types/userTypes";
 import { axios } from "../utils";
 import { FieldError } from "../types/ErrorTypes";
+import { useState } from "react";
 
 interface FieldErrorPath extends FieldError {
   path: "firstName" | "lastName" | "email" | "password" | "confirmPassword";
 }
 
 const ResgisterPage: NextPage = () => {
+  const [response, setResponse] = useState(false);
   const router = useRouter();
 
   const {
@@ -37,7 +39,7 @@ const ResgisterPage: NextPage = () => {
       });
 
       const { message } = await response.data;
-      toast.success(message);
+      setResponse(message);
     } catch (error: any) {
       if (error?.fields && error.fields.length > 0) {
         error.fields.forEach((field: FieldErrorPath) => {
@@ -48,6 +50,10 @@ const ResgisterPage: NextPage = () => {
       }
     }
   };
+
+  if (response) {
+    return <p>{response}</p>;
+  }
 
   return (
     <main className="min-h-screen bg-gray-100 py-16">
@@ -189,4 +195,5 @@ const ResgisterPage: NextPage = () => {
     </main>
   );
 };
+
 export default ResgisterPage;

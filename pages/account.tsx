@@ -13,7 +13,7 @@ const AccountPage: NextPageWithLayout = () => {
         <hr />
         <LoginInfoForm />
         <hr />
-        <NotificationMenu />
+        {/* <NotificationMenu /> */}
       </div>
     </div>
   );

@@ -1,58 +1,125 @@
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import Input from "./Input";
+import SectionHeading from "./SectionHeading";
+
 const LoginInfoForm = () => {
+  const [updateEmail, setUpdateEmail] = useState(false);
+  const [updatePassword, setUpdatePassword] = useState(false);
+
+  const user = useAppSelector((state) => state.auth.user);
+  const dispatch = useAppDispatch();
+
+  const toggleEmailChangeHandler = () => {
+    setUpdateEmail((prev) => !prev);
+  };
+
+  const togglePasswordChangeHandler = () => {
+    setUpdatePassword((prev) => !prev);
+  };
+
   return (
-    <div className="mt-10 sm:mt-0">
-      <div className="md:grid md:grid-cols-3 md:gap-6">
-        <div className="md:col-span-1">
-          <div className="px-4 sm:px-0">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">Login Information</h3>
-            <p className="mt-1 text-sm text-gray-600">Specify or update your email and password for login process.</p>
-          </div>
-        </div>
-        <div className="mt-5 md:col-span-2 md:mt-0">
-          <form action="#" method="POST">
-            <div className="overflow-hidden shadow sm:rounded-md">
-              <div className="bg-white px-4 py-5 sm:p-6">
-                <div className="space-y-4">
-                  <div className="">
-                    <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
-                      First name
-                    </label>
-                    <input
-                      type="text"
-                      name="first-name"
-                      id="first-name"
-                      autoComplete="given-name"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+    <section className="md:grid md:grid-cols-3 md:gap-6">
+      <div className="md:col-span-1">
+        <SectionHeading
+          heading="Login Information"
+          paragraph="Specify or update your email and password for login process."
+        />
+      </div>
+
+      <div className="mt-5 md:col-span-2 md:mt-0">
+        <div className="overflow-hidden shadow-md rounded-lg">
+          <div className="bg-white px-4 py-5 sm:p-6 space-y-6">
+            <section className="">
+              <div className="flex items-end gap-2">
+                <div className="flex-1">
+                  <Input label="Email Address" type="email" defaultValue={user?.email} disabled={!updateEmail} />
+                </div>
+
+                {!updateEmail && (
+                  <button
+                    className="rounded-md bg-indigo-600 text-white block px-6 font-medium py-2 mt-4"
+                    type="button"
+                    onClick={toggleEmailChangeHandler}
+                  >
+                    Change
+                  </button>
+                )}
+              </div>
+
+              {updateEmail && (
+                <div className="flex items-center justify-end gap-4">
+                  <button
+                    onClick={toggleEmailChangeHandler}
+                    className="rounded-md bg-red-600 text-white block px-6 font-medium py-2 mt-4"
+                    type="button"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    className="rounded-md bg-indigo-600 text-white block px-6 font-medium py-2 mt-4"
+                    type="button"
+                  >
+                    Update
+                  </button>
+                </div>
+              )}
+            </section>
+
+            <section className="">
+              {!updatePassword && (
+                <div className="flex items-end gap-2">
+                  <div className="flex-1">
+                    <Input
+                      label="Password"
+                      type="password"
+                      placeholder="•••••••••••••••••••"
+                      disabled={!updatePassword}
                     />
                   </div>
 
-                  <div className="">
-                    <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
-                      Last name
-                    </label>
-                    <input
-                      type="text"
-                      name="last-name"
-                      id="last-name"
-                      autoComplete="family-name"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
+                  <button
+                    className="rounded-md bg-indigo-600 text-white block px-6 font-medium py-2 mt-4"
+                    type="button"
+                    onClick={togglePasswordChangeHandler}
+                  >
+                    Change
+                  </button>
                 </div>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                <button
-                  type="submit"
-                  className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  Save
-                </button>
-              </div>
-            </div>
-          </form>
+              )}
+
+              {updatePassword && (
+                <div className="space-y-2">
+                  <Input label="Current Password" type="password" autoComplete="off" disabled={!updatePassword} />
+                  <Input label="New Password" type="password" autoComplete="off" disabled={!updatePassword} />
+                  <Input label="Confirm Password" type="password" autoComplete="off" disabled={!updatePassword} />
+                </div>
+              )}
+
+              {updatePassword && (
+                <div className="flex items-center justify-end gap-4">
+                  <button
+                    onClick={togglePasswordChangeHandler}
+                    className="rounded-md bg-red-600 text-white block px-6 font-medium py-2 mt-4"
+                    type="button"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    className="rounded-md bg-indigo-600 text-white block px-6 font-medium py-2 mt-4"
+                    type="button"
+                  >
+                    Update
+                  </button>
+                </div>
+              )}
+            </section>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 export default LoginInfoForm;

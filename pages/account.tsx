@@ -7,12 +7,14 @@ import { NextPageWithLayout } from "./_app";
 
 const AccountPage: NextPageWithLayout = () => {
   return (
-    <div className="w-11/12 mx-auto md:py-10 lg:py-20">
-      <PersonalInformationForm />
-      <hr />
-      <LoginInfoForm />
-      <hr />
-      <NotificationMenu />
+    <div className="w-11/12 mx-auto page-height-min py-10 lg:py-20">
+      <div className="space-y-10">
+        <PersonalInformationForm />
+        <hr />
+        <LoginInfoForm />
+        <hr />
+        <NotificationMenu />
+      </div>
     </div>
   );
 };

@@ -33,9 +33,3 @@ export interface CartType {
   totalAmount: number;
   totalQuantity: number;
 }
-
-export interface ProfileFields {
-  firstName?: string;
-  lastName?: string;
-  gender?: string;
-}

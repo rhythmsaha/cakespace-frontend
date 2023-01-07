@@ -1,25 +1,29 @@
-import { FC, InputHTMLAttributes } from "react";
+/* eslint-disable react/display-name */
+import { FC, InputHTMLAttributes, useId, forwardRef } from "react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  name: string;
   label: string;
-  register: () => {};
+
+  register?: () => {};
 }
 
-const Input: FC<Props> = ({ label, name, register, ...rest }) => {
+const Input = forwardRef<HTMLInputElement, Props>(({ label, type, ...rest }, ref) => {
+  const id = useId();
+
   return (
-    <div className="">
-      <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
-        First name
+    <div className="space-y-1 ">
+      <label htmlFor={id} className="block text-sm font-medium text-gray-700">
+        {label}
       </label>
+
       <input
-        type="text"
-        name="first-name"
-        id="first-name"
-        autoComplete="given-name"
-        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        type={type || "text"}
+        id={id}
+        ref={ref}
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2.5"
+        {...rest}
       />
     </div>
   );
-};
+});
 export default Input;

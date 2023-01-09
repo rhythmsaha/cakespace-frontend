@@ -67,7 +67,7 @@ const PersonalInformationForm = () => {
 
       <div className="mt-5 md:col-span-2 md:mt-0">
         <form onSubmit={handleSubmit(submitHandler)}>
-          <div className="overflow-hidden shadow-md rounded-lg">
+          <div className="overflow-hidden shadow-lg shadow-gray-200 border border-gray-100 rounded-xl md:p-2">
             <div className="bg-white px-4 py-5 sm:p-6">
               <section className="space-y-4">
                 <Input

@@ -10,10 +10,10 @@ const AccountPage: NextPageWithLayout = () => {
     <div className="w-11/12 mx-auto page-height-min py-10 lg:py-20">
       <div className="space-y-10">
         <PersonalInformationForm />
-        <hr />
+        <hr className="border-gray-50 border-2 mx-10" />
         <LoginInfoForm />
-        <hr />
-        {/* <NotificationMenu /> */}
+        <hr className="border-gray-50 border-2 mx-10" />
+        <NotificationMenu />
       </div>
     </div>
   );

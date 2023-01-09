@@ -12,7 +12,6 @@ import VerifyEmail from "./VerifyEmail";
 const UpdateEmailComponent = () => {
   const [updateEmail, setUpdateEmail] = useState(false);
   const [verifyMode, setVerifyMode] = useState(false);
-  const [OTP, setOTP] = useState();
 
   const user = useAppSelector((state) => state.auth.user);
 
@@ -20,19 +19,22 @@ const UpdateEmailComponent = () => {
     register,
     handleSubmit,
     setError,
+    setValue,
+    watch,
     formState: { errors, isSubmitting },
-  } = useForm<{ email: string; otp: number }>();
+  } = useForm<{ email?: string }>();
 
   const enableEmailChangeHandler = () => {
     setUpdateEmail(true);
   };
 
   const cancelEmailChangeHandler = () => {
+    // setValue("email", user?.email);
     setUpdateEmail(false);
     setVerifyMode(false);
   };
 
-  const submitHandler = async ({ email }: { email: string }) => {
+  const submitHandler = async ({ email }: { email?: string }) => {
     if (isSubmitting) return;
     toast.dismiss();
 
@@ -68,7 +70,7 @@ const UpdateEmailComponent = () => {
 
   return (
     <div>
-      <VerifyEmail open={verifyMode} onCancel={cancelEmailChangeHandler} />
+      <VerifyEmail open={verifyMode} onCancel={cancelEmailChangeHandler} email={watch("email")} />
 
       <form onSubmit={handleSubmit(submitHandler)}>
         {!updateEmail && (

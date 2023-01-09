@@ -1,15 +1,85 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import OtpInput from "react-otp-input";
+import { toast } from "react-hot-toast";
+import { axios } from "../../utils";
+import { User } from "../../types/userTypes";
+import { useAppDispatch } from "../../hooks";
+import { updateProfile } from "../../store/slices/auth/slice";
+import { FieldError } from "../../types/ErrorTypes";
 
 interface Props {
+  email?: string;
   onCancel: () => void;
   open: boolean;
 }
 
-const VerifyEmail = ({ onCancel, open }: Props) => {
+const VerifyEmail = ({ onCancel, open, email }: Props) => {
+  const [otp, setOtp] = useState<string>();
+  const [loading, setLoading] = useState(false);
+
+  const dispatch = useAppDispatch();
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const re = /^[0-9\b]+$/;
+
+    // if value is not blank, then test the regex
+
+    if (e.target.value === "" || re.test(e.target.value)) {
+      setOtp(e.target.value);
+    }
+  };
+
+  const closeHandler = () => {
+    setOtp("");
+    onCancel();
+  };
+
+  const submitHandler = async () => {
+    if (loading) return;
+
+    setLoading(true);
+    toast.dismiss();
+
+    try {
+      const response = await axios.post("/auth/verifyemail", {
+        email,
+        code: otp,
+      });
+      interface ResponseType extends User {
+        message: string;
+      }
+      const data = (await response.data) as ResponseType;
+
+      dispatch(
+        updateProfile({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          gender: data.gender,
+        })
+      );
+
+      closeHandler();
+    } catch (error: any) {
+      if (error?.fields && error.fields.length > 0) {
+        interface FieldErrorPath extends FieldError {
+          path: "otp" | "email";
+        }
+        error.fields.forEach((field: FieldErrorPath) => {
+          toast.error(field.message);
+        });
+      } else {
+        toast.error(error?.message || error || "Something went wrong!");
+      }
+    }
+
+    setLoading(false);
+  };
+
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onCancel}>
+    <Transition appear show={open} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={closeHandler}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -19,48 +89,54 @@ const VerifyEmail = ({ onCancel, open }: Props) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
               leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                      <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                        Deactivate account
-                      </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Are you sure you want to deactivate your account? All of your data will be permanently
-                          removed. This action cannot be undone.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white px-6 py-8 text-left align-middle shadow-xl transition-all">
+                <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+                  Verify Email Address
+                </Dialog.Title>
+
+                <div className="mt-2">
+                  <p className="text-sm text-gray-500">
+                    We&apos;ve sent you an email with an one time passcode to verify your email address.
+                  </p>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+
+                <div className="my-8 flex items-center justify-center">
+                  <input
+                    type="text"
+                    className="rounded-md text-indigo-600 font-medium text-center border-indigo-600 tracking-widest w-36"
+                    maxLength={6}
+                    value={otp}
+                    onChange={onChangeHandler}
+                  />
+                </div>
+
+                <div className="flex items-center justify-end gap-3">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={onCancel}
+                    className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-0"
+                    onClick={submitHandler}
                   >
-                    Deactivate
+                    Verify
                   </button>
+
                   <button
                     type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={onCancel}
+                    className="inline-flex justify-center rounded-md border border-transparent bg-red-500 px-6 py-2 text-sm font-medium text-white hover:bg-red-400 focus:outline-none focus:ring-0"
+                    onClick={closeHandler}
                   >
                     Cancel
                   </button>
@@ -70,7 +146,7 @@ const VerifyEmail = ({ onCancel, open }: Props) => {
           </div>
         </div>
       </Dialog>
-    </Transition.Root>
+    </Transition>
   );
 };
 export default VerifyEmail;

@@ -27,6 +27,7 @@
     "react-hook-form": "^7.36.1",
     "react-hot-toast": "^2.4.0",
     "react-loader-spinner": "^5.3.4",
+    "react-otp-input": "^2.4.0",
     "react-redux": "^8.0.2",
     "react-responsive-carousel": "^3.2.23",
     "react-sticky-box": "^1.0.2",

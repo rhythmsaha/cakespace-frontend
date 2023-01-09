@@ -1,122 +1,166 @@
+import { FieldError, useForm } from "react-hook-form";
+import CheckbocInput from "./CheckbocInput";
+import SectionHeading from "./SectionHeading";
+import { useState, useEffect } from "react";
+import { axios } from "../../utils";
+import { toast } from "react-hot-toast";
+
+interface FieldErrorPath extends FieldError {
+  path: "email_account" | "email_orders" | "email_offers" | "push_orders" | "push_offers";
+}
+
+interface NotificationSettings {
+  email_account: boolean;
+  email_orders: boolean;
+  email_offers: boolean;
+  push_orders: boolean;
+  push_offers: boolean;
+}
+
 const NotificationMenu = () => {
+  const {
+    register,
+    handleSubmit,
+    setError,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<NotificationSettings>();
+
+  useEffect(() => {
+    const func = async () => {
+      try {
+        const response = await axios.get("/auth/notificationsettings");
+
+        const data = (await response.data) as NotificationSettings;
+
+        setValue("email_account", data.email_account);
+        setValue("email_offers", data.email_offers);
+        setValue("email_orders", data.email_orders);
+        setValue("push_offers", data.push_offers);
+        setValue("push_orders", data.push_orders);
+      } catch (error: any) {
+        setValue("email_account", false);
+        setValue("email_offers", false);
+        setValue("email_orders", false);
+        setValue("push_offers", false);
+        setValue("push_orders", false);
+      }
+    };
+
+    func();
+  }, []);
+
+  const submitHandler = async ({
+    email_account,
+    email_offers,
+    email_orders,
+    push_offers,
+    push_orders,
+  }: NotificationSettings) => {
+    if (isSubmitting) return;
+    toast.dismiss();
+
+    try {
+      const response = await axios.put("/auth/notificationsettings", {
+        email_account,
+        email_offers,
+        email_orders,
+        push_offers,
+        push_orders,
+      });
+
+      interface ResponseType extends NotificationSettings {
+        message: string;
+      }
+
+      const data = (await response.data) as ResponseType;
+      setValue("email_account", data.email_account);
+      setValue("email_offers", data.email_offers);
+      setValue("email_orders", data.email_orders);
+      setValue("push_offers", data.push_offers);
+      setValue("push_orders", data.push_orders);
+
+      toast.success(data.message);
+    } catch (error: any) {
+      if (error?.fields && error.fields.length > 0) {
+        error.fields.forEach((field: FieldErrorPath) => {
+          setError(field.path, { type: field.type, message: field.message });
+        });
+      } else {
+        toast.error(error?.message || error || "Something went wrong!");
+      }
+    }
+  };
+
   return (
     <div className="mt-10 sm:mt-0">
       <div className="md:grid md:grid-cols-3 md:gap-6">
         <div className="md:col-span-1">
-          <div className="px-4 sm:px-0">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">Notifications</h3>
-            <p className="mt-1 text-sm text-gray-600">
-              Decide which communications you&apos;d like to receive and how.
-            </p>
-          </div>
+          <SectionHeading
+            heading="Notifications"
+            paragraph=" Decide which communications you'd like to receive and how."
+          />
         </div>
+
         <div className="mt-5 md:col-span-2 md:mt-0">
-          <form action="#" method="POST">
-            <div className="overflow-hidden shadow sm:rounded-md">
+          <form onSubmit={handleSubmit(submitHandler)}>
+            <div className="overflow-hidden shadow-lg shadow-gray-200 border border-gray-100 rounded-xl md:p-2">
               <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
                 <fieldset>
-                  <legend className="sr-only">By Email</legend>
-                  <div className="text-base font-medium text-gray-900" aria-hidden="true">
-                    By Email
-                  </div>
-                  <div className="mt-4 space-y-4">
-                    <div className="flex items-start">
-                      <div className="flex h-5 items-center">
-                        <input
-                          id="comments"
-                          name="comments"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label htmlFor="comments" className="font-medium text-gray-700">
-                          Comments
-                        </label>
-                        <p className="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="flex h-5 items-center">
-                        <input
-                          id="candidates"
-                          name="candidates"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label htmlFor="candidates" className="font-medium text-gray-700">
-                          Candidates
-                        </label>
-                        <p className="text-gray-500">Get notified when a candidate applies for a job.</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="flex h-5 items-center">
-                        <input
-                          id="offers"
-                          name="offers"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label htmlFor="offers" className="font-medium text-gray-700">
-                          Offers
-                        </label>
-                        <p className="text-gray-500">Get notified when a candidate accepts or rejects an offer.</p>
-                      </div>
-                    </div>
+                  <legend className="contents text-base font-medium text-gray-900">By Email</legend>
+                  <p className="text-sm text-gray-500">These will be delivered to your email address</p>
+
+                  <div className="mt-4 space-y-5">
+                    <CheckbocInput
+                      label="Orders"
+                      paragraph="Get notified for updates regarding your orders."
+                      {...register("email_orders")}
+                      // defaultChecked={notificationSettings?.email_orders}
+                    />
+                    <CheckbocInput
+                      label="Offers"
+                      paragraph="Get notified when offers and discounts are available."
+                      {...register("email_offers")}
+                      // defaultChecked={notificationSettings?.email_offers}
+                    />
+                    <CheckbocInput
+                      label="Account"
+                      paragraph="Get notified for changes in your account."
+                      {...register("email_account")}
+                      // defaultChecked={notificationSettings?.email_account}
+                    />
                   </div>
                 </fieldset>
+
                 <fieldset>
                   <legend className="contents text-base font-medium text-gray-900">Push Notifications</legend>
-                  <p className="text-sm text-gray-500">These are delivered via SMS to your mobile phone.</p>
+                  <p className="text-sm text-gray-500">These are delivered via push notifications.</p>
                   <div className="mt-4 space-y-4">
-                    <div className="flex items-center">
-                      <input
-                        id="push-everything"
-                        name="push-notifications"
-                        type="radio"
-                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    <div className="mt-4 space-y-5">
+                      <CheckbocInput
+                        label="Orders"
+                        paragraph="Get notified for updates regarding your orders."
+                        {...register("push_orders")}
+                        // defaultChecked={notificationSettings?.push_orders}
                       />
-                      <label htmlFor="push-everything" className="ml-3 block text-sm font-medium text-gray-700">
-                        Everything
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input
-                        id="push-email"
-                        name="push-notifications"
-                        type="radio"
-                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      <CheckbocInput
+                        label="Offers"
+                        paragraph="Get notified when offers and discounts are available."
+                        {...register("push_offers")}
+                        // defaultChecked={notificationSettings?.push_offers}
                       />
-                      <label htmlFor="push-email" className="ml-3 block text-sm font-medium text-gray-700">
-                        Same as email
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input
-                        id="push-nothing"
-                        name="push-notifications"
-                        type="radio"
-                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                      />
-                      <label htmlFor="push-nothing" className="ml-3 block text-sm font-medium text-gray-700">
-                        No push notifications
-                      </label>
                     </div>
                   </div>
                 </fieldset>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                <button
-                  type="submit"
-                  className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  Save
-                </button>
+
+                <section className="mt-6 text-right">
+                  <button
+                    type="submit"
+                    className="rounded-md bg-indigo-600 py-2.5 px-8 text-sm font-medium text-white hover:bg-indigo-500 active:bg-indigo-600 transition w-full md:w-auto"
+                  >
+                    Save
+                  </button>
+                </section>
               </div>
             </div>
           </form>

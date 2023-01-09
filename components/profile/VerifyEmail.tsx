@@ -1,6 +1,5 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import OtpInput from "react-otp-input";
 import { toast } from "react-hot-toast";
 import { axios } from "../../utils";
 import { User } from "../../types/userTypes";
